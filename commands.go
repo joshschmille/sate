@@ -4,8 +4,6 @@ import (
 	"log"
 	"math/rand"
 	"strconv"
-
-	ui "github.com/gizak/termui/v3"
 )
 
 func cmdRoll(a []string) {
@@ -82,70 +80,24 @@ func cmdUnlikely(a []string) {
 }
 
 func cmdMission(a []string) {
-
-	factions, err := readNameFile("./data/missions/faction.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	missions, err := readNameFile("./data/missions/mission.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	objectives, err := readNameFile("./data/missions/objective.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	oppositions, err := readNameFile("./data/missions/opposition.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	agendas, err := readNameFile("./data/missions/agenda.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	faction := factions[generateNumber(0, len(factions)-1)]
-	mission := missions[generateNumber(0, len(missions)-1)]
-	objective := objectives[generateNumber(0, len(objectives)-1)]
-	location := generateLocation()
-	aspect := generateLocationAspect()
-	opposition := oppositions[generateNumber(0, len(oppositions)-1)]
-	agenda := agendas[generateNumber(0, len(agendas)-1)]
-	snag := generateSnag()
-
-	renderOutput("[--- Mission Briefing ---](fg:green)")
-
-	renderOutput("Faction: " + faction)
-	renderOutput("Mission: " + mission)
-	renderOutput("Objective: " + objective)
-	renderOutput("Location: " + location)
-	renderOutput("Location Aspect: " + aspect)
-	renderOutput("Opposition: " + opposition)
-	renderOutput("Agenda: " + agenda)
-	renderOutput("Snag: " + snag)
-
-	renderOutput("[--- End ---](fg:green)")
-
-	// Update the mission in the sidebar
-	missionBlock.Text = faction + "\n" + mission + "\n" + objective + "\n" + location + "\n" + aspect + "\n" + opposition + "\n" + agenda + "\n" + snag
-	ui.Render(missionBlock)
+	m := mission{}
+	m.generate()
+	m.render(a[0])
 }
 
 func cmdEvent(a []string) {
 	eventType := generateNumber(1, 6)
-
 	if eventType < 5 {
-		one, two := generateEvent(eventType)
-		renderOutput(one + " | " + two)
+		e := event{}
+		e.generate(eventType)
+		e.render()
 	} else {
-		one, two := generateEvent(generateNumber(1, 4))
-		renderOutput(one + " | " + two)
-		one, two = generateEvent(generateNumber(1, 4))
-		renderOutput(one + " | " + two)
+		e := event{}
+		e.generate(generateNumber(1, 4))
+		e.render()
+		e2 := event{}
+		e2.generate(generateNumber(1, 4))
+		e2.render()
 	}
 }
 
