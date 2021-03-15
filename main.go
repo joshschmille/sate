@@ -353,29 +353,34 @@ func cmdEvent(a []string) {
 	eventType := generateNumber(1, 6)
 
 	if eventType < 5 {
-		generateEvent(eventType)
+		one, two := generateEvent(eventType)
+		renderOutput(one + " | " + two)
 	} else {
-		generateEvent(generateNumber(1, 4))
-		generateEvent(generateNumber(1, 4))
+		one, two := generateEvent(generateNumber(1, 4))
+		renderOutput(one + " | " + two)
+		one, two = generateEvent(generateNumber(1, 4))
+		renderOutput(one + " | " + two)
 	}
 }
 
-func generateEvent(t int) {
+func generateEvent(t int) (string, string) {
 	renderOutput("[--- Event ---](fg:green)")
 
 	switch t {
-	case 1: // Scuffle Event
-		generateScuffleEvent()
-	case 2: // Social Event
-		generateSocialEvent()
-	case 3: // Encounter Event
-		generateEncounterEvent()
+	case 1:
+		return generateScuffleEvent()
+	case 2:
+		return generateSocialEvent()
+	case 3:
+		return generateEncounterEvent()
 	case 4:
-		generateDifficultyEvent()
+		return generateDifficultyEvent()
 	}
+
+	return "ERROR", "Something is very wrong with the Event Generator."
 }
 
-func generateScuffleEvent() {
+func generateScuffleEvent() (string, string) {
 	scuffles, err := readNameFile("./data/events/scuffle.names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
@@ -385,12 +390,13 @@ func generateScuffleEvent() {
 		log.Fatalf("readLines: %s", err)
 	}
 
-	renderOutput("[Scuffle](fg:red)")
-	renderOutput("Enemy: " + scuffles[generateNumber(0, len(scuffles)-1)])
-	renderOutput("Tactic: " + tactics[generateNumber(0, len(tactics)-1)])
+	enemy := scuffles[generateNumber(0, len(scuffles)-1)]
+	tactic := tactics[generateNumber(0, len(tactics)-1)]
+
+	return enemy, tactic
 }
 
-func generateSocialEvent() {
+func generateSocialEvent() (string, string) {
 	socials, err := readNameFile("./data/events/social.names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
@@ -400,31 +406,28 @@ func generateSocialEvent() {
 		log.Fatalf("readLines: %s", err)
 	}
 
-	renderOutput("[Social](fg:cyan)")
-	renderOutput(socials[generateNumber(0, len(socials)-1)])
-	renderOutput(bearings[generateNumber(0, len(bearings)-1)])
+	social := socials[generateNumber(0, len(socials)-1)]
+	bearing := bearings[generateNumber(0, len(bearings)-1)]
+
+	return social, bearing
 }
 
-func generateEncounterEvent() {
+func generateEncounterEvent() (string, string) {
 	encounters, err := readNameFile("./data/events/encounter.names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
 
-	renderOutput("[Encounter](fg:yellow)")
-	renderOutput(encounters[generateNumber(0, len(encounters)-1)])
-	renderOutput(generateFlavor())
+	return encounters[generateNumber(0, len(encounters)-1)], generateFlavor()
 }
 
-func generateDifficultyEvent() {
+func generateDifficultyEvent() (string, string) {
 	difficulties, err := readNameFile("./data/events/difficulty.names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
 
-	renderOutput("[Difficulty](fg:orange)")
-	renderOutput(difficulties[generateNumber(0, len(difficulties)-1)])
-	renderOutput(generateFlavor())
+	return difficulties[generateNumber(0, len(difficulties)-1)], generateFlavor()
 }
 
 func generateFlavor() string {
@@ -524,10 +527,10 @@ func cmdMonster(a []string) {
 }
 
 func cmdTreasure(a []string) {
-	generateTreasure()
+	renderOutput("Treasure: " + generateTreasure())
 }
 
-func generateTreasure() {
+func generateTreasure() string {
 	aspects, err := readNameFile("./data/monsters/treasure01.names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
@@ -545,35 +548,20 @@ func generateTreasure() {
 	featureId := generateNumber(0, len(features)-1)
 	formId := generateNumber(0, len(forms)-1)
 
-	renderOutput("Treasure: " + aspects[aspectId] + " " + features[featureId] + " " + forms[formId])
+	return aspects[aspectId] + " " + features[featureId] + " " + forms[formId]
 }
 
 func cmdHazard(a []string) {
-	generateHazard()
+	renderOutput("Hazard: " + generateHazard())
 }
 
-func generateHazard() {
-	hazardType := generateNumber(1, 6)
-
-	if hazardType < 3 {
-		hazards, err := readNameFile("./data/monsters/hazard01.names")
-		if err != nil {
-			log.Fatalf("readLines: %s", err)
-		}
-		renderOutput(hazards[generateNumber(0, len(hazards)-1)])
-	} else if hazardType < 5 {
-		hazards, err := readNameFile("./data/monsters/hazard02.names")
-		if err != nil {
-			log.Fatalf("readLines: %s", err)
-		}
-		renderOutput(hazards[generateNumber(0, len(hazards)-1)])
-	} else {
-		hazards, err := readNameFile("./data/monsters/hazard03.names")
-		if err != nil {
-			log.Fatalf("readLines: %s", err)
-		}
-		renderOutput("Hazard: " + hazards[generateNumber(0, len(hazards)-1)])
+func generateHazard() string {
+	hazardType := generateNumber(1, 3)
+	hazards, err := readNameFile("./data/monsters/hazard0" + strconv.Itoa(hazardType) + ".names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
 	}
+	return hazards[generateNumber(0, len(hazards)-1)]
 }
 
 func cmdGizmo(a []string) {
@@ -838,38 +826,45 @@ func generateShipOrigin() string {
 
 func cmdExplore(a []string) {
 	rnd := generateNumber(1, 6)
+	one, two := generateSuddenEvent()
 	if rnd < 3 {
-		generateSuddenEvent()
+		renderOutput("All of a sudden...")
+		renderOutput(one + " | " + two)
 	} else if rnd < 5 {
-		generateFeature()
+		renderOutput("Feature of Interest")
+		renderOutput(generateFeature())
 	} else {
-		generateSuddenEvent()
-		generateFeature()
+		renderOutput("All of a sudden...")
+		renderOutput(one + " | " + two)
+		renderOutput("Feature of Interest")
+		renderOutput(generateFeature())
 	}
 }
 
-func generateSuddenEvent() {
+func generateSuddenEvent() (string, string) {
 	rnd := generateNumber(1, 6)
+	one, two := "", ""
 	switch rnd {
 	case 1:
-		generateScuffleEvent()
+		one, two = generateScuffleEvent()
 	case 2:
-		generateEncounterEvent()
+		one, two = generateEncounterEvent()
 	case 3:
-		// location aspect + flavor
-		renderOutput("Location Aspect: " + generateLocationAspect())
-		renderOutput("Flavor: " + generateFlavor())
+		one = generateLocationAspect()
+		two = generateFlavor()
 	case 4:
-		generateDifficultyEvent()
+		one, two = generateDifficultyEvent()
 	case 5:
-		generateSocialEvent()
+		one, two = generateSocialEvent()
 	case 6:
-		renderOutput("Snag: " + generateSnag())
+		one = "Snag"
+		two = generateSnag()
 	}
+	return one, two
 }
 
-func generateFeature() {
-	renderOutput("feature")
+func generateFeature() string {
+	return "feature" // TODO: Planet Generation
 }
 
 func parseArgs(s string) {
