@@ -832,12 +832,14 @@ func cmdExplore(a []string) {
 		renderOutput(one + " | " + two)
 	} else if rnd < 5 {
 		renderOutput("Feature of Interest")
-		renderOutput(generateFeature())
+		renderOutput("Feature: " + generateFeature())
+		renderOutput("Aspect: " + generateFeatureAspect())
 	} else {
 		renderOutput("All of a sudden...")
 		renderOutput(one + " | " + two)
 		renderOutput("Feature of Interest")
-		renderOutput(generateFeature())
+		renderOutput("Feature: " + generateFeature())
+		renderOutput("Aspect: " + generateFeatureAspect())
 	}
 }
 
@@ -863,8 +865,189 @@ func generateSuddenEvent() (string, string) {
 	return one, two
 }
 
+func cmdPlanet(a []string) {
+	renderOutput("Planet Type: " + generatePlanetType())
+	renderOutput("Species: " + generateSpecies())
+
+	rnd := generateNumber(1, 6)
+	if rnd < 4 {
+		renderOutput("Culture: " + generateCulture())
+	} else if rnd < 6 {
+		renderOutput("Culture: " + generateCulture() + " [-](fg:green) " + generateCulture())
+	} else {
+		renderOutput("Culture: " + generateCulture() + " [-><-](fg:red) " + generateCulture())
+	}
+
+	renderOutput("Feature: " + generateFeature())
+	renderOutput("Aspect: " + generateFeatureAspect())
+
+	rnd2 := generateNumber(1, 6)
+	if rnd2 < 4 {
+		renderOutput("Pickle: N/A")
+	} else if rnd2 < 6 {
+		renderOutput("Pickle: " + generatePickle())
+	} else {
+		renderOutput("Pickles: " + generatePickle() + " | " + generatePickle())
+	}
+}
+
+func generatePlanetType() string {
+	rnd := generateNumber(1, 3)
+	types, err := readNameFile("./data/planets/type0" + strconv.Itoa(rnd) + ".names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return types[generateNumber(0, len(types)-1)]
+}
+
+func generateSpecies() string {
+	rnd := generateNumber(1, 2)
+	prefixes, err := readNameFile("./data/planets/prefix0" + strconv.Itoa(rnd) + ".names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+
+	rnd2 := generateNumber(1, 2)
+	suffixes, err := readNameFile("./data/planets/suffix0" + strconv.Itoa(rnd2) + ".names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return prefixes[generateNumber(0, len(prefixes)-1)] + suffixes[generateNumber(0, len(suffixes)-1)]
+}
+
+func generateCulture() string {
+	rnd := generateNumber(1, 3)
+	cultures, err := readNameFile("./data/planets/culture0" + strconv.Itoa(rnd) + ".names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return cultures[generateNumber(0, len(cultures)-1)]
+}
+
 func generateFeature() string {
-	return "feature" // TODO: Planet Generation
+	rnd := generateNumber(1, 3)
+	features, err := readNameFile("./data/planets/feature0" + strconv.Itoa(rnd) + ".names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return features[generateNumber(0, len(features)-1)]
+}
+
+func generateFeatureAspect() string {
+	rnd := generateNumber(1, 3)
+	aspects, err := readNameFile("./data/planets/aspect0" + strconv.Itoa(rnd) + ".names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return aspects[generateNumber(0, len(aspects)-1)]
+}
+
+func generatePickle() string {
+	pickles, err := readNameFile("./data/planets/pickle.names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return pickles[generateNumber(0, len(pickles)-1)]
+}
+
+func cmdNavigate(a []string) {
+	rnd := generateNumber(1, 6)
+	if rnd < 3 {
+		renderOutput("Condition: " + generateWeather())
+	} else {
+		renderOutput("Condition: Smooth Sailing")
+	}
+
+	rnd2 := generateNumber(1, 6)
+	switch rnd2 {
+	case 1:
+		renderOutput("Encounter: The Opposition")
+	case 2:
+		renderOutput("Distress Signal")
+		renderOutput(generateDistressSignal())
+	case 3:
+		renderOutput("Another Ship")
+		renderOutput("Ship: " + generateAnotherShip())
+		renderOutput("Ship Status: " + generateShipStatus())
+	case 4:
+		creature, bearing := generateCreature()
+		renderOutput("Space Creature")
+		renderOutput(creature + " | " + bearing)
+	case 5:
+		severity, issue := generateIssue()
+		renderOutput("Onboard Issues")
+		renderOutput(severity + " " + issue)
+	case 6:
+		renderOutput("Strange Encounter")
+		renderOutput(generateStrangeEncounter())
+	}
+}
+
+func generateWeather() string {
+	weathers, err := readNameFile("./data/spaceencounters/weather.names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return weathers[generateNumber(0, len(weathers)-1)]
+}
+
+func generateDistressSignal() string {
+	distresses, err := readNameFile("./data/spaceencounters/distress.names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return distresses[generateNumber(0, len(distresses)-1)]
+}
+
+func generateAnotherShip() string {
+	rnd := generateNumber(1, 2)
+	ships, err := readNameFile("./data/spaceencounters/ship0" + strconv.Itoa(rnd) + ".names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return ships[generateNumber(0, len(ships)-1)]
+}
+
+func generateShipStatus() string {
+	rnd := generateNumber(1, 2)
+	statuses, err := readNameFile("./data/spaceencounters/status0" + strconv.Itoa(rnd) + ".names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return statuses[generateNumber(0, len(statuses)-1)]
+}
+
+func generateCreature() (string, string) {
+	creatures, err := readNameFile("./data/spaceencounters/creature.names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	bearings, err := readNameFile("./data/spaceencounters/bearing.names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return creatures[generateNumber(0, len(creatures)-1)], bearings[generateNumber(0, len(bearings)-1)]
+}
+
+func generateIssue() (string, string) {
+	issues, err := readNameFile("./data/spaceencounters/issue.names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	severities, err := readNameFile("./data/spaceencounters/severity.names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+
+	return severities[generateNumber(0, len(severities)-1)], issues[generateNumber(0, len(issues)-1)]
+}
+
+func generateStrangeEncounter() string {
+	stranges, err := readNameFile("./data/spaceencounters/strange.names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+	return stranges[generateNumber(0, len(stranges)-1)]
 }
 
 func parseArgs(s string) {
@@ -906,6 +1089,10 @@ func parseArgs(s string) {
 			cmdShip(args)
 		case "explore":
 			cmdExplore(args)
+		case "planet":
+			cmdPlanet(args)
+		case "navigate":
+			cmdNavigate(args)
 		default:
 			renderOutput("[Invalid Command.](fg:red)")
 		}
