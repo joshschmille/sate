@@ -102,78 +102,27 @@ func cmdEvent(a []string) {
 }
 
 func cmdRuin(a []string) {
-	types, err := readNameFile("./data/ruins/type.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	aesthetics, err := readNameFile("./data/ruins/aesthetic.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	purposes, err := readNameFile("./data/ruins/purpose.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	depths, err := readNameFile("./data/ruins/depth.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	threats, err := readNameFile("./data/ruins/threat.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	danger := generateNumber(1, 20)
-	var dangerResult string
-
-	if danger < 10 {
-		dangerResult = "Milk Run (5)"
-	} else if danger < 15 {
-		dangerResult = "Perilous (10)"
-	} else {
-		dangerResult = "Death Trap (15)"
-	}
-
-	renderOutput("[--- Star Ruin ---](fg:purple)")
-	renderOutput("Type: " + types[generateNumber(0, len(types)-1)])
-	renderOutput("Aesthetic: " + aesthetics[generateNumber(0, len(aesthetics)-1)])
-	renderOutput("Purpose: " + purposes[generateNumber(0, len(purposes)-1)])
-	renderOutput("Danger Level: " + dangerResult)
-	renderOutput("Depth: " + depths[generateNumber(0, len(depths)-1)])
-	renderOutput("Threat: " + threats[generateNumber(0, len(threats)-1)])
-	generateTreasure()
+	r := ruin{}
+	r.generate()
+	r.render(a[0])
 }
 
 func cmdMonster(a []string) {
-	types, err := readNameFile("./data/monsters/type.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	aspects, err := readNameFile("./data/monsters/aspect.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	bearings, err := readNameFile("./data/monsters/bearing.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	sizes, err := readNameFile("./data/monsters/size.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	renderOutput("Type: " + types[generateNumber(0, len(types)-1)])
-	renderOutput("Aspect: " + aspects[generateNumber(0, len(aspects)-1)])
-	renderOutput("Bearing: " + bearings[generateNumber(0, len(bearings)-1)])
-	renderOutput("Size: " + sizes[generateNumber(0, len(sizes)-1)])
+	m := monster{}
+	m.generate()
+	m.render(a[0])
 }
 
 func cmdTreasure(a []string) {
-	renderOutput("Treasure: " + generateTreasure())
+	t := treasure{}
+	t.generate()
+	t.render(a[0])
 }
 
 func cmdHazard(a []string) {
-	renderOutput("Hazard: " + generateHazard())
+	h := hazard{}
+	h.generate()
+	h.render()
 }
 
 func cmdGizmo(a []string) {

@@ -41,36 +41,6 @@ func generateFlavor() string {
 	return flavor
 }
 
-func generateTreasure() string {
-	aspects, err := readNameFile("./data/monsters/treasure01.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	features, err := readNameFile("./data/monsters/treasure02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	forms, err := readNameFile("./data/monsters/treasure03.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	aspectId := generateNumber(0, len(aspects)-1)
-	featureId := generateNumber(0, len(features)-1)
-	formId := generateNumber(0, len(forms)-1)
-
-	return aspects[aspectId] + " " + features[featureId] + " " + forms[formId]
-}
-
-func generateHazard() string {
-	hazardType := generateNumber(1, 3)
-	hazards, err := readNameFile("./data/monsters/hazard0" + strconv.Itoa(hazardType) + ".names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	return hazards[generateNumber(0, len(hazards)-1)]
-}
-
 func generateShipName() string {
 	names1, err := readNameFile("./data/shipnames/01.names")
 	if err != nil {
