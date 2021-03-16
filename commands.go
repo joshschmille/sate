@@ -126,176 +126,15 @@ func cmdHazard(a []string) {
 }
 
 func cmdGizmo(a []string) {
-	types01, err := readNameFile("./data/gizmos/type01.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	types02, err := readNameFile("./data/gizmos/type02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	types03, err := readNameFile("./data/gizmos/type03.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	prefixes01, err := readNameFile("./data/gizmos/prefix01.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	prefixes02, err := readNameFile("./data/gizmos/prefix02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	forms01, err := readNameFile("./data/gizmos/form01.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	forms02, err := readNameFile("./data/gizmos/form02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	forms03, err := readNameFile("./data/gizmos/form03.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	effects01, err := readNameFile("./data/gizmos/effect01.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	effects02, err := readNameFile("./data/gizmos/effect02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	effects03, err := readNameFile("./data/gizmos/effect03.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	aspects01, err := readNameFile("./data/gizmos/aspect01.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	aspects02, err := readNameFile("./data/gizmos/aspect02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	aspects03, err := readNameFile("./data/gizmos/aspect03.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	durabilities, err := readNameFile("./data/gizmos/durability.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	name := ""
-	effect := ""
-
-	typeRnd := generateNumber(1, 6)
-	prefixRnd := generateNumber(1, 6)
-	formRnd := generateNumber(1, 6)
-	effectRnd := generateNumber(1, 6)
-	aspectRnd := generateNumber(1, 6)
-
-	if typeRnd < 3 {
-		name += types01[generateNumber(0, len(types01)-1)] + " "
-	} else if typeRnd < 5 {
-		name += types02[generateNumber(0, len(types02)-1)] + " "
-	} else {
-		name += types03[generateNumber(0, len(types03)-1)] + " "
-	}
-
-	if prefixRnd < 4 {
-		name += prefixes01[generateNumber(0, len(prefixes01)-1)]
-	} else {
-		name += prefixes02[generateNumber(0, len(prefixes02)-1)]
-	}
-
-	if formRnd < 3 {
-		name += forms01[generateNumber(0, len(forms01)-1)]
-	} else if formRnd < 5 {
-		name += forms02[generateNumber(0, len(forms02)-1)]
-	} else {
-		name += forms03[generateNumber(0, len(forms03)-1)]
-	}
-
-	if effectRnd < 3 {
-		effect += effects01[generateNumber(0, len(effects01)-1)] + " "
-	} else if effectRnd < 5 {
-		effect += effects02[generateNumber(0, len(effects02)-1)] + " "
-	} else {
-		effect += effects03[generateNumber(0, len(effects03)-1)] + " "
-	}
-
-	if aspectRnd < 3 {
-		effect += aspects01[generateNumber(0, len(aspects01)-1)]
-	} else if aspectRnd < 5 {
-		effect += aspects02[generateNumber(0, len(aspects02)-1)]
-	} else {
-		effect += aspects03[generateNumber(0, len(aspects03)-1)]
-	}
-
-	renderOutput("[--- Gizmo ---](fg:pink)")
-
-	renderOutput("Name: " + name)
-	renderOutput("Effect: " + effect)
-	renderOutput("Durability: " + durabilities[generateNumber(0, len(durabilities)-1)])
-
-	renderOutput("[--- End ---](fg:pink)")
+	g := gizmo{}
+	g.generate()
+	g.render(a[0])
 }
 
 func cmdShip(a []string) {
-	if a[0] != "" {
-		switch a[0] {
-		case "name":
-			renderOutput("Ship Name: " + generateShipName())
-		case "quirk":
-			renderOutput("Ship Quirk: " + generateShipQuirk())
-		case "perk":
-			renderOutput("Ship Perk: " + generateShipPerk())
-		case "origin":
-			renderOutput("Ship Origin: " + generateShipOrigin())
-		default:
-			renderOutput("Invalid Subcommand: " + a[0])
-		}
-	} else {
-		rndCondition := generateNumber(1, 6)
-		rndType := generateNumber(1, 6)
-
-		shipType := ""
-		quirkCount := 0
-		perkCount := 0
-
-		if rndCondition < 4 {
-			shipType += "Shiny "
-			quirkCount = 1
-		} else {
-			shipType += "Scuffed "
-			quirkCount = 2
-		}
-
-		if rndType < 4 {
-			shipType += "Economy "
-			perkCount = 1
-		} else {
-			shipType += "Luxury "
-			perkCount = 2
-		}
-		shipType += "Starship"
-
-		renderOutput("[--- Starship ---](fg:blue)")
-		renderOutput("Name: " + generateShipName())
-		renderOutput("Type: " + shipType)
-
-		for i := 0; i < quirkCount; i++ {
-			renderOutput("Quirk: " + generateShipQuirk())
-		}
-
-		for i := 0; i < perkCount; i++ {
-			renderOutput("Perk: " + generateShipPerk())
-		}
-
-		renderOutput("Origin: " + generateShipOrigin())
-	}
+	s := ship{}
+	s.generate()
+	s.render(a[0])
 }
 
 func cmdExplore(a []string) {
@@ -318,7 +157,8 @@ func cmdExplore(a []string) {
 }
 
 func cmdPlanet(a []string) {
-	p := generatePlanet()
+	p := planet{}
+	p.generate()
 	p.render(a[0])
 }
 

@@ -41,93 +41,6 @@ func generateFlavor() string {
 	return flavor
 }
 
-func generateShipName() string {
-	names1, err := readNameFile("./data/shipnames/01.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	names2, err := readNameFile("./data/shipnames/02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	names3, err := readNameFile("./data/shipnames/03.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	names4, err := readNameFile("./data/shipnames/04.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	names5, err := readNameFile("./data/shipnames/05.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	names6, err := readNameFile("./data/shipnames/06.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	names7, err := readNameFile("./data/shipnames/07.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	output := ""
-	nameType := generateNumber(0, 2)
-
-	switch nameType {
-	case 0:
-
-		rnd := generateNumber(0, len(names3))
-		rnd2 := generateNumber(0, len(names4))
-
-		output = names3[rnd] + names4[rnd2]
-	case 1:
-
-		rnd := generateNumber(0, len(names1))
-		rnd2 := generateNumber(0, len(names2))
-
-		output = "The " + names1[rnd] + " " + names2[rnd2]
-	case 2:
-
-		rnd := generateNumber(0, len(names5))
-		rnd2 := generateNumber(0, len(names6))
-		rnd3 := generateNumber(0, len(names7))
-
-		output = "The " + names5[rnd] + " " + names6[rnd2] + " " + names7[rnd3]
-	}
-
-	return output
-}
-
-func generateShipPerk() string {
-	rnd := generateNumber(1, 6)
-	perks, err := readNameFile("./data/ships/perk0" + strconv.Itoa(rnd) + ".names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	return perks[generateNumber(0, len(perks)-1)]
-}
-
-func generateShipQuirk() string {
-	rnd := generateNumber(1, 3)
-	quirks, err := readNameFile("./data/ships/quirk0" + strconv.Itoa(rnd) + ".names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	return quirks[generateNumber(0, len(quirks)-1)]
-}
-
-func generateShipOrigin() string {
-	origins, err := readNameFile("./data/ships/origin.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	return origins[generateNumber(0, len(origins)-1)]
-}
-
 func generateSuddenEvent() (string, string) {
 	rnd := generateNumber(1, 6)
 	one, two := "", ""
@@ -148,12 +61,6 @@ func generateSuddenEvent() (string, string) {
 		two = generateSnag()
 	}
 	return one, two
-}
-
-func generatePlanet() planet {
-	p := planet{}
-	p.generate()
-	return p
 }
 
 func generateWeather() string {

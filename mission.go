@@ -52,8 +52,6 @@ func (m *mission) render(req string) {
 		renderOutput("Agenda: " + m.agenda)
 		renderOutput("Snag: " + m.snag)
 
-		renderOutput("[--- End ---](fg:green)")
-
 		missionBlock.Text = m.faction + "\n" + m.mission + "\n" + m.objective + "\n" + m.location + "\n" + m.aspect + "\n" + m.opposition + "\n" + m.agenda + "\n" + m.snag
 		ui.Render(missionBlock)
 	}
