@@ -163,74 +163,14 @@ func cmdPlanet(a []string) {
 }
 
 func cmdNavigate(a []string) {
-	rnd := generateNumber(1, 6)
-	if rnd < 3 {
-		renderOutput("Condition: " + generateWeather())
-	} else {
-		renderOutput("Condition: Smooth Sailing")
-	}
-
-	rnd2 := generateNumber(1, 6)
-	switch rnd2 {
-	case 1:
-		renderOutput("Encounter: The Opposition")
-	case 2:
-		renderOutput("Distress Signal")
-		renderOutput(generateDistressSignal())
-	case 3:
-		renderOutput("Another Ship")
-		renderOutput("Ship: " + generateAnotherShip())
-		renderOutput("Ship Status: " + generateShipStatus())
-	case 4:
-		creature, bearing := generateCreature()
-		renderOutput("Space Creature")
-		renderOutput(creature + " | " + bearing)
-	case 5:
-		severity, issue := generateIssue()
-		renderOutput("Onboard Issues")
-		renderOutput(severity + " " + issue)
-	case 6:
-		renderOutput("Strange Encounter")
-		renderOutput(generateStrangeEncounter())
-	}
+	e := encounter{}
+	e.generate()
+	e.render()
 }
 
 func cmdSector(a []string) {
-	rnd := generateNumber(1, 6)
-	switch rnd {
-	case 1:
-		rndPlanet := generateNumber(1, 6)
-		if rndPlanet < 4 {
-			p := planet{}
-			p.generate()
-			p.render("all")
-		} else if rndPlanet < 6 {
-			p1 := planet{}
-			p1.generate()
-			p1.render("all")
+	s := sector{}
+	s.generate()
+	s.render(a[0])
 
-			p2 := planet{}
-			p2.generate()
-			p2.render("all")
-		} else {
-			//1d6 planetoids
-		}
-	case 2:
-		rndOutpost := generateNumber(1, 6)
-		if rndOutpost < 4 {
-			//single
-		} else if rndOutpost < 6 {
-			//twin
-		} else {
-			//1d6 planetoids
-		}
-	case 3:
-		//nebula
-	case 4:
-		//asteroid
-	case 5:
-		//badlands
-	case 6:
-		//anomaly
-	}
 }

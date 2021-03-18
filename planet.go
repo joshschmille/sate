@@ -10,7 +10,7 @@ type planet struct {
 }
 
 func (p *planet) generate() planet {
-	p.planetType = generatePlanetType()
+	p.planetType = generatePlanetType(false)
 	p.species = generateSpecies()
 	p.culture = generateCulture()
 	p.feature = generateFeature()
@@ -44,13 +44,29 @@ func (p *planet) render(req string) {
 	}
 }
 
-func generatePlanetType() string {
+func generatePlanetType(block bool) string {
 	rnd := generateNumber(1, 3)
 	types, err := readNameFile("./data/planets/type0" + strconv.Itoa(rnd) + ".names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
-	return types[generateNumber(0, len(types)-1)]
+
+	output := ""
+	var rnd2 int
+
+	if block {
+		rnd2 = generateNumber(0, len(types)-2)
+	} else {
+		rnd2 = generateNumber(0, len(types)-1)
+	}
+
+	if types[rnd2] == "Roll Twice" {
+		output = generatePlanetType(true) + " | " + generatePlanetType(true)
+	} else {
+		output = types[rnd2]
+	}
+
+	return output
 }
 
 func generateSpecies() string {
