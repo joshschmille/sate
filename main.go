@@ -229,6 +229,8 @@ func parseArgs(s string) {
 			cmdNavigate(args)
 		case "sector":
 			cmdSector(args)
+		case "npc":
+			cmdNpc(args)
 		default:
 			renderOutput("[Invalid Command.](fg:red)")
 		}

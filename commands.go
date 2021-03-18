@@ -172,5 +172,10 @@ func cmdSector(a []string) {
 	s := sector{}
 	s.generate()
 	s.render(a[0])
+}
 
+func cmdNpc(a []string) {
+	n := npc{}
+	n.generate()
+	n.render(a[0])
 }
