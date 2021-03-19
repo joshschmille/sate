@@ -179,3 +179,15 @@ func cmdNpc(a []string) {
 	n.generate()
 	n.render(a[0])
 }
+
+func cmdMech(a []string) {
+	m := mech{}
+	m.generate()
+	m.render(a[0])
+}
+
+func cmdMassiveMonster(a []string) {
+	mm := massivemonster{}
+	mm.generate()
+	mm.render()
+}

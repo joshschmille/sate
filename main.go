@@ -231,6 +231,10 @@ func parseArgs(s string) {
 			cmdSector(args)
 		case "npc":
 			cmdNpc(args)
+		case "mech":
+			cmdMech(args)
+		case "mm":
+			cmdMassiveMonster(args)
 		default:
 			renderOutput("[Invalid Command.](fg:red)")
 		}
