@@ -235,6 +235,8 @@ func parseArgs(s string) {
 			cmdMech(args)
 		case "mm":
 			cmdMassiveMonster(args)
+		case "beasty":
+			cmdBeasty(args)
 		default:
 			renderOutput("[Invalid Command.](fg:red)")
 		}

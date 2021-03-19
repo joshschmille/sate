@@ -191,3 +191,9 @@ func cmdMassiveMonster(a []string) {
 	mm.generate()
 	mm.render()
 }
+
+func cmdBeasty(a []string) {
+	b := beasty{}
+	b.generate()
+	b.render(a[0])
+}
