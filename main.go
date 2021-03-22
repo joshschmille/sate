@@ -2,6 +2,11 @@ package main
 
 import (
 	"bufio"
+	"encoding/base64"
+	"image"
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
 	"log"
 	"os"
 	"strings"
@@ -12,6 +17,9 @@ import (
 
 var gameLog = widgets.NewList()
 var missionBlock = widgets.NewParagraph()
+var macguffinBlock = widgets.NewImage(nil)
+var mgToggle = true
+
 var termWidth = 0
 var termHeight = 0
 
@@ -41,7 +49,7 @@ func main() {
 	primaryColor := ui.Color(32)
 	secondaryColor := ui.Color(87)
 
-	filteredWords := [8]string{
+	filteredWords := [9]string{
 		"<Space>",
 		"<Enter>",
 		"<Backspace>",
@@ -50,6 +58,7 @@ func main() {
 		"<Down>",
 		"<Left>",
 		"<Right>",
+		"<C-x>",
 	}
 
 	gameLog.Title = "Game Log"
@@ -73,6 +82,17 @@ func main() {
 	missionBlock.BorderStyle.Fg = primaryColor
 	missionBlock.TitleStyle.Fg = secondaryColor
 
+	image, _, err := image.Decode(base64.NewDecoder(base64.StdEncoding, strings.NewReader(mgImages[generateNumber(0, len(mgImages)-1)])))
+	if err != nil {
+		log.Fatalf("failed to decode gopher image: %v", err)
+	}
+
+	maxX, maxY := calculateMacguffinSize()
+
+	macguffinBlock.SetRect(1, 1, maxX, maxY) //termWidth-40, ((termWidth-40)/2)+1)
+	macguffinBlock.Title = "Wouldn't it  - (Ctrl-X: show/hide)"
+	macguffinBlock.Image = image
+
 	inputBox := widgets.NewParagraph()
 	inputBox.Text = ""
 	inputBox.SetRect(0, termHeight-3, termWidth, termHeight)
@@ -80,6 +100,9 @@ func main() {
 	inputBox.TitleStyle.Fg = secondaryColor
 
 	ui.Render(gameLog, statBlock, missionBlock, inputBox)
+	if mgToggle {
+		ui.Render(macguffinBlock)
+	}
 
 	uiEvents := ui.PollEvents()
 	for {
@@ -87,6 +110,15 @@ func main() {
 		switch e.ID {
 		case "<C-c>":
 			return
+		case "<C-x>":
+			if mgToggle {
+				mgToggle = false
+				//ui.Clear()
+				ui.Render(gameLog, statBlock, missionBlock, inputBox)
+			} else {
+				mgToggle = true
+				ui.Render(macguffinBlock)
+			}
 		case "<Resize>":
 			payload := e.Payload.(ui.Resize)
 			termWidth = payload.Width
@@ -94,9 +126,15 @@ func main() {
 			gameLog.SetRect(0, 0, payload.Width-40, payload.Height-3)
 			statBlock.SetRect(payload.Width-40, 0, payload.Width, 9)
 			missionBlock.SetRect(payload.Width-40, 9, payload.Width, 19)
+
+			maxX, maxY = calculateMacguffinSize()
+			macguffinBlock.SetRect(1, 1, maxX, maxY) //payload.Width-40, ((payload.Width-40)/2)+1)
 			inputBox.SetRect(0, payload.Height-3, payload.Width, payload.Height)
 			ui.Clear()
 			ui.Render(gameLog, statBlock, missionBlock, inputBox)
+			if mgToggle {
+				ui.Render(macguffinBlock)
+			}
 		case "<Enter>":
 
 			parseArgs(inputBox.Text)
@@ -171,6 +209,16 @@ func Chunks(s string, chunkSize int) []string {
 		chunks = append(chunks, string(chunk[:len]))
 	}
 	return chunks
+}
+
+func calculateMacguffinSize() (int, int) {
+	mgMaxWidth := (termHeight * 2) - 14
+
+	if termWidth-40 > mgMaxWidth {
+		return mgMaxWidth, mgMaxWidth / 2
+	}
+
+	return termWidth - 41, ((termWidth - 41) / 2)
 }
 
 func renderOutput(s string) {
