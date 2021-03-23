@@ -197,3 +197,9 @@ func cmdBeasty(a []string) {
 	b.generate()
 	b.render(a[0])
 }
+
+func cmdMacguffin(a []string) {
+	m := macguffin{}
+	m.generate()
+	m.render(a[0])
+}

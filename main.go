@@ -2,8 +2,6 @@ package main
 
 import (
 	"bufio"
-	"encoding/base64"
-	"image"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
@@ -18,7 +16,7 @@ import (
 var gameLog = widgets.NewList()
 var missionBlock = widgets.NewParagraph()
 var macguffinBlock = widgets.NewImage(nil)
-var mgToggle = true
+var mgToggle = false
 
 var termWidth = 0
 var termHeight = 0
@@ -82,16 +80,9 @@ func main() {
 	missionBlock.BorderStyle.Fg = primaryColor
 	missionBlock.TitleStyle.Fg = secondaryColor
 
-	image, _, err := image.Decode(base64.NewDecoder(base64.StdEncoding, strings.NewReader(mgImages[generateNumber(0, len(mgImages)-1)])))
-	if err != nil {
-		log.Fatalf("failed to decode gopher image: %v", err)
-	}
-
 	maxX, maxY := calculateMacguffinSize()
 
-	macguffinBlock.SetRect(1, 1, maxX, maxY) //termWidth-40, ((termWidth-40)/2)+1)
-	macguffinBlock.Title = "Wouldn't it  - (Ctrl-X: show/hide)"
-	macguffinBlock.Image = image
+	macguffinBlock.SetRect(1, 1, maxX, maxY)
 
 	inputBox := widgets.NewParagraph()
 	inputBox.Text = ""
@@ -113,7 +104,6 @@ func main() {
 		case "<C-x>":
 			if mgToggle {
 				mgToggle = false
-				//ui.Clear()
 				ui.Render(gameLog, statBlock, missionBlock, inputBox)
 			} else {
 				mgToggle = true
@@ -229,6 +219,7 @@ func renderOutput(s string) {
 	gameLog.Rows = append(gameLog.Rows, "")
 	gameLog.ScrollBottom()
 
+	mgToggle = false
 	ui.Render(gameLog)
 }
 
@@ -285,6 +276,8 @@ func parseArgs(s string) {
 			cmdMassiveMonster(args)
 		case "beasty":
 			cmdBeasty(args)
+		case "macguffin":
+			cmdMacguffin(args)
 		default:
 			renderOutput("[Invalid Command.](fg:red)")
 		}
