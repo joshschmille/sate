@@ -234,3 +234,14 @@ func cmdCharacter(a []string) {
 		renderOutput("Invalid subcommand: " + a[0])
 	}
 }
+
+func cmdHelp(a []string) {
+	lines, err := readNameFile("./data/help.names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+
+	for i := 0; i < len(lines); i++ {
+		renderOutput(lines[i])
+	}
+}

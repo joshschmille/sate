@@ -311,6 +311,8 @@ func parseArgs(s string) {
 			cmdNpc(args)
 		case "mech":
 			cmdMech(args)
+		case "massivemonster":
+			cmdMassiveMonster(args)
 		case "mm":
 			cmdMassiveMonster(args)
 		case "beasty":
@@ -323,6 +325,8 @@ func parseArgs(s string) {
 			cmdBackstory(args)
 		case "character":
 			cmdCharacter(args)
+		case "help":
+			cmdHelp(args)
 		default:
 			renderOutput("[Invalid Command.](fg:red)")
 		}

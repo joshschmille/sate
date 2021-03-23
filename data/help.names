@@ -1,0 +1,54 @@
+[--- Commands ---](fg:cyan)
+[roll](fg:purple)
+[-](fg:8) Roll a D20 and D6.
+[log](fg:purple)
+[-](fg:8) Output text to the log.
+[name](fg:purple)
+[-](fg:8) Generate a random character name.
+[likely | possibly | unlikely](fg:purple)
+[-](fg:8) Oracle rolls for Yes/No & But/And. (Episode Events)
+[mission](fg:purple)
+[-](fg:8) Generate a mission and populate the mission block. (Mission Generator)
+[event](fg:purple)
+[-](fg:8) Generate an event. (Episode Events)
+[ruin](fg:purple)
+[-](fg:8) Generate a ruin. (Star Ruins & Space Hulks)
+[monster](fg:purple)
+[-](fg:8) Generate a monster. ()
+[treasure](fg:purple)
+[-](fg:8) Generate a treasure. ()
+[hazard](fg:purple)
+[-](fg:8) Generate a hazard. ()
+[gizmo](fg:purple)
+[-](fg:8) Generate a gizmo. ()
+[ship](fg:purple)
+[-](fg:8) Generate a ship. ()
+[explore](fg:purple)
+[-](fg:8) Generate a random event while exploring a planet. ()
+[planet](fg:purple)
+[-](fg:8) Generate a planet. ()
+[navigate](fg:purple)
+[-](fg:8) Generate a space encounter. ()
+[sector](fg:purple)
+[-](fg:8) Generate a sector object. ()
+[npc](fg:purple)
+[-](fg:8) Generate a character. ()
+[mech](fg:purple)
+[-](fg:8) Generate a mech. ()
+[massivemonster | mm](fg:purple)
+[-](fg:8) Generate a massive monster. ()
+[beasty](fg:purple)
+[-](fg:8) Generate a beasty. ()
+[macguffin | mg](fg:purple)
+[-](fg:8) Generate a display a macguffin. ()
+[backstory](fg:purple)
+[-](fg:8) Generate a backstory. ()
+[character](fg:purple)
+[-](fg:8) Modify the fields in the stats block.
+[---](fg:green)
+Most commands have subcommands to display partial results as well.
+Example:
+mission snag
+Output:
+> mission snag
+Snag: Creature or Enemy
