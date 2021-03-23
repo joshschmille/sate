@@ -73,7 +73,6 @@ func main() {
 	statBlock.Title = "Stats"
 	player.load("./logs/character")
 	player.render()
-	//loadCharacter() //statBlock.Text = "Name: Riya\nMoxie: +1\nSmarts: 0\nWiggles: 0\nFriends: 0\nPockets: 0\nGumption: 10/10"
 	statBlock.SetRect(termWidth-40, 0, termWidth, 9)
 	statBlock.BorderStyle.Fg = primaryColor
 	statBlock.TitleStyle.Fg = secondaryColor
@@ -207,6 +206,17 @@ func Chunks(s string, chunkSize int) []string {
 	return chunks
 }
 
+func combineArgsToString(s []string) string {
+	output := ""
+	for i := 0; i < len(s); i++ {
+		if i > 0 {
+			output += " "
+		}
+		output += s[i]
+	}
+	return output
+}
+
 func renderOutput(s string) {
 	chunked := Chunks(s, termWidth-42)
 	for i := 0; i < len(chunked); i++ {
@@ -263,6 +273,8 @@ func parseArgs(s string) {
 		switch cmd {
 		case "roll":
 			cmdRoll(args)
+		case "log":
+			cmdLog(args)
 		case "name":
 			cmdName(args)
 		case "likely":

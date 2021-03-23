@@ -14,6 +14,10 @@ func cmdRoll(a []string) {
 	renderOutput(output)
 }
 
+func cmdLog(a []string) {
+	renderOutput(combineArgsToString(a[0:]))
+}
+
 func cmdName(a []string) {
 	names, err := readNameFile("./data/character.names")
 	if err != nil {
@@ -213,13 +217,20 @@ func cmdBackstory(a []string) {
 func cmdCharacter(a []string) {
 	switch a[0] {
 	case "name":
-
+		player.setAttribute("name", combineArgsToString(a[1:]))
 	case "moxie":
+		player.setAttribute("moxie", combineArgsToString(a[1:]))
 	case "smarts":
+		player.setAttribute("smarts", combineArgsToString(a[1:]))
 	case "wiggles":
+		player.setAttribute("wiggles", combineArgsToString(a[1:]))
 	case "friends":
+		player.setAttribute("friends", combineArgsToString(a[1:]))
 	case "pockets":
+		player.setAttribute("pockets", combineArgsToString(a[1:]))
 	case "gumption":
-	case "maxgumption":
+		player.setAttribute("gumption", combineArgsToString(a[1:]))
+	default:
+		renderOutput("Invalid subcommand: " + a[0])
 	}
 }
