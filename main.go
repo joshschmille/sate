@@ -84,9 +84,9 @@ func main() {
 	missionBlock.BorderStyle.Fg = primaryColor
 	missionBlock.TitleStyle.Fg = secondaryColor
 
-	maxX, maxY := calculateMacguffinSize()
+	startX, startY, endX, endY := calculateMacguffinRect()
 
-	macguffinBlock.SetRect(1, 1, maxX, maxY)
+	macguffinBlock.SetRect(startX, startY, endX, endY)
 
 	inputBox := widgets.NewParagraph()
 	inputBox.Text = ""
@@ -121,8 +121,9 @@ func main() {
 			statBlock.SetRect(payload.Width-40, 0, payload.Width, 9)
 			missionBlock.SetRect(payload.Width-40, 9, payload.Width, 19)
 
-			maxX, maxY = calculateMacguffinSize()
-			macguffinBlock.SetRect(1, 1, maxX, maxY) //payload.Width-40, ((payload.Width-40)/2)+1)
+			startX, startY, endX, endY := calculateMacguffinRect()
+
+			macguffinBlock.SetRect(startX, startY, endX, endY) //payload.Width-40, ((payload.Width-40)/2)+1)
 			inputBox.SetRect(0, payload.Height-3, payload.Width, payload.Height)
 			ui.Clear()
 			ui.Render(gameLog, statBlock, missionBlock, inputBox)
@@ -204,16 +205,6 @@ func Chunks(s string, chunkSize int) []string {
 		chunks = append(chunks, string(chunk[:len]))
 	}
 	return chunks
-}
-
-func calculateMacguffinSize() (int, int) {
-	mgMaxWidth := (termHeight * 2) - 14
-
-	if termWidth-40 > mgMaxWidth {
-		return mgMaxWidth, mgMaxWidth / 2
-	}
-
-	return termWidth - 41, ((termWidth - 41) / 2)
 }
 
 func renderOutput(s string) {
