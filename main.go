@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
@@ -15,6 +16,8 @@ import (
 
 var gameLog = widgets.NewList()
 var missionBlock = widgets.NewParagraph()
+var statBlock = widgets.NewParagraph()
+var player = character{}
 var macguffinBlock = widgets.NewImage(nil)
 var mgToggle = false
 
@@ -67,9 +70,10 @@ func main() {
 	gameLog.BorderStyle.Fg = primaryColor
 	gameLog.TitleStyle.Fg = secondaryColor
 
-	statBlock := widgets.NewParagraph()
 	statBlock.Title = "Stats"
-	statBlock.Text = "Name: Riya\nMoxie: +1\nSmarts: 0\nWiggles: 0\nFriends: 0\nPockets: 0\nGumption: 10/10"
+	player.load("./logs/character")
+	player.render()
+	//loadCharacter() //statBlock.Text = "Name: Riya\nMoxie: +1\nSmarts: 0\nWiggles: 0\nFriends: 0\nPockets: 0\nGumption: 10/10"
 	statBlock.SetRect(termWidth-40, 0, termWidth, 9)
 	statBlock.BorderStyle.Fg = primaryColor
 	statBlock.TitleStyle.Fg = secondaryColor
@@ -220,8 +224,39 @@ func renderOutput(s string) {
 	gameLog.Rows = append(gameLog.Rows, "")
 	gameLog.ScrollBottom()
 
+	writeLog(s)
+
 	mgToggle = false
 	ui.Render(gameLog)
+}
+
+func loadCharacter() {
+	stats, err := readNameFile("./logs/character")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+
+	statBlock.Text = "Name: " + stats[0] + "\nMoxie: " + stats[1] + "\nSmarts: " + stats[2] + "\nWiggles: " + stats[3] + "\nFriends: " + stats[4] + "\nPockets: " + stats[5] + "\nGumption: " + stats[6]
+}
+
+func writeLog(s string) {
+	f, err := os.OpenFile("logs/all", os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	newLine := s
+	_, err = fmt.Fprintln(f, newLine)
+	if err != nil {
+		fmt.Println(err)
+		f.Close()
+		return
+	}
+	err = f.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
 
 func parseArgs(s string) {
@@ -283,6 +318,8 @@ func parseArgs(s string) {
 			cmdMacguffin(args)
 		case "backstory":
 			cmdBackstory(args)
+		case "character":
+			cmdCharacter(args)
 		default:
 			renderOutput("[Invalid Command.](fg:red)")
 		}

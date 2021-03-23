@@ -209,3 +209,17 @@ func cmdBackstory(a []string) {
 	bs.generate()
 	bs.render()
 }
+
+func cmdCharacter(a []string) {
+	switch a[0] {
+	case "name":
+
+	case "moxie":
+	case "smarts":
+	case "wiggles":
+	case "friends":
+	case "pockets":
+	case "gumption":
+	case "maxgumption":
+	}
+}
