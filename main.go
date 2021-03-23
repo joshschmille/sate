@@ -142,10 +142,11 @@ func main() {
 				ui.Render(inputBox)
 			}
 		case "<Up>":
-			// TODO: Command History.
+			gameLog.ScrollPageUp()
+			ui.Render(gameLog)
 		case "<Down>":
-			// TODO: Command History.
-
+			gameLog.ScrollPageDown()
+			ui.Render(gameLog)
 		}
 
 		switch e.Type {
@@ -278,6 +279,10 @@ func parseArgs(s string) {
 			cmdBeasty(args)
 		case "macguffin":
 			cmdMacguffin(args)
+		case "mg":
+			cmdMacguffin(args)
+		case "backstory":
+			cmdBackstory(args)
 		default:
 			renderOutput("[Invalid Command.](fg:red)")
 		}

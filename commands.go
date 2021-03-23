@@ -203,3 +203,9 @@ func cmdMacguffin(a []string) {
 	m.generate()
 	m.render(a[0])
 }
+
+func cmdBackstory(a []string) {
+	bs := backstory{}
+	bs.generate()
+	bs.render()
+}
