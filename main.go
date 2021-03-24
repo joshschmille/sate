@@ -64,7 +64,7 @@ func main() {
 
 	gameLog.Title = "Game Log"
 	gameLog.Rows = append(gameLog.Rows, "Welcome to [Space Aces](fg:purple): Terminal Edition!")
-	gameLog.Rows = append(gameLog.Rows, "")
+	gameLog.Rows = append(gameLog.Rows, " ")
 	gameLog.ScrollBottom()
 	gameLog.SetRect(0, 0, termWidth-40, termHeight-3)
 	gameLog.BorderStyle.Fg = primaryColor
