@@ -47,6 +47,6 @@ jobs:
 #        git commit -m "New Release"
 
     - name: Commit & Push changes
-          uses: actions-js/push@master
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
