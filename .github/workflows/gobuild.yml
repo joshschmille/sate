@@ -40,11 +40,5 @@ jobs:
       run: |
         git config --global user.name 'Josh Schmille'
         git config --global user.email 'josh.schmille@gmail.com'
-        git add -A
-        git commit -m "New Release"
-
-    - name: Push to master
-      uses: mikeal/publish-to-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH_NAME: '' #optional defaults to master
+        git commit -ma "New Release"
+        git push
