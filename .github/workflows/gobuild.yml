@@ -40,5 +40,6 @@ jobs:
       run: |
         git config --global user.name 'Josh Schmille'
         git config --global user.email 'josh.schmille@gmail.com'
-        git commit -ma "New Release"
+        git add --all
+        git commit -m "New Release"
         git push
