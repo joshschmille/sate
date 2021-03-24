@@ -3,6 +3,8 @@ name: Go Build & Release
 on:
   push:
     branches: master
+    tags:
+      - "v*"
   pull_request:
     branches: master
 
@@ -42,13 +44,13 @@ jobs:
         mv SATE-linux.tar.gz ./bin
         mv SATE-win64.zip ./bin
 
-    - name: Commit & Push changes
-      uses: actions-js/push@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        message: 'New Release'
-        author_email: josh.schmille@gmail.com
-        author_name: Josh Schmille
+    #- name: Commit & Push changes
+    #  uses: actions-js/push@master
+    #  with:
+    #    github_token: ${{ secrets.GITHUB_TOKEN }}
+    #    message: 'New Release'
+    #    author_email: josh.schmille@gmail.com
+    #    author_name: Josh Schmille
 
     - name: Create Release
       uses: "marvinpinto/action-automatic-releases@latest"
