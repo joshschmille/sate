@@ -1,25 +1,47 @@
-name: Super-Linter
+name: Go Build & Release
 
-# Run this workflow every time a new commit pushed to your repository
-on: push
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
 
 jobs:
-  # Set the job key. The key is displayed as the job name
-  # when a job name is not provided
-  super-lint:
-    # Name the Job
-    name: Lint code base
-    # Set the type of machine to run on
+
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      # Checks out a copy of your repository on the ubuntu-latest machine
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      # Runs the Super-Linter action
-      - name: Run Super-Linter
-        uses: github/super-linter@v3
-        env:
-          DEFAULT_BRANCH: master
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+
+    - name: Setup zip
+      run: sudo apt -y install zip unzip
+
+    - name: Build Linux
+      run: |
+        go build -v .
+        tar -czvf SATE-linux.tar.gz SATE ./data ./logs
+        mv SATE-linux.tar.gz ./bin/linux
+
+    - name: Build Windows
+      run: |
+        env GOOS=windows GOARCH=amd64 go build -v .
+        zip -r SATE-win64.zip SATE.exe ./data ./logs
+        mv SATE-win64.zip ./bin/win64
+
+    - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Release Test"
+          files: |
+            *.zip
+            *.tar.gz
+
+    - name: Test
+      run: go test -v .
