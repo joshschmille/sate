@@ -21,6 +21,9 @@ jobs:
     - name: Setup zip
       run: sudo apt -y install zip unzip
 
+    - name: Make bin dir
+      run: mkdir ./bin
+
     - name: Build Linux
       run: |
         go build -v .
