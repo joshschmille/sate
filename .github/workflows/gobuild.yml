@@ -27,26 +27,25 @@ jobs:
     - name: Build Linux
       run: |
         go build -v .
-        tar -czvf SATE-linux.tar.gz SATE ./data ./logs
-        mv SATE-linux.tar.gz ./bin
 
     - name: Build Windows
       run: |
         env GOOS=windows GOARCH=amd64 go build -v .
-        zip -r SATE-win64.zip SATE.exe ./data ./logs
-        mv SATE-win64.zip ./bin
 
-#    - name: Commit Releases
-#      run: |
-#        git config --global user.name 'Josh Schmille'
-#        git config --global user.email 'josh.schmille@gmail.com'
-#        git add --all
-#        git commit -m "New Release"
+    - name: Archive Releases
+      run: |
+        tar -czvf SATE-linux.tar.gz SATE ./data ./logs
+        zip -r SATE-win64.zip SATE.exe ./data ./logs
+
+    - name: Move Releases
+      run: |
+        mv SATE-linux.tar.gz ./bin
+        mv SATE-win64.zip ./bin
 
     - name: Commit & Push changes
       uses: actions-js/push@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        message: New Release
+        message: 'New Release'
         author_email: josh.schmille@gmail.com
         author_name: Josh Schmille
