@@ -33,7 +33,8 @@ jobs:
         zip -r SATE-win64.zip SATE.exe ./data ./logs
         mv SATE-win64.zip ./bin/win64
 
-    - uses: "marvinpinto/action-automatic-releases@latest"
+    - name: Create Release
+      uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
