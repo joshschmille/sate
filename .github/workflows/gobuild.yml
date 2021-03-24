@@ -25,13 +25,13 @@ jobs:
       run: |
         go build -v .
         tar -czvf SATE-linux.tar.gz SATE ./data ./logs
-        mv SATE-linux.tar.gz ./bin/linux
+        mkdir ./bin/linux && mv SATE-linux.tar.gz ./bin/linux
 
     - name: Build Windows
       run: |
         env GOOS=windows GOARCH=amd64 go build -v .
         zip -r SATE-win64.zip SATE.exe ./data ./logs
-        mv SATE-win64.zip ./bin/win64
+        mkdir ./bin/win64 && mv SATE-win64.zip ./bin/win64
 
     - name: Test
       run: go test -v .
