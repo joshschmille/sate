@@ -36,11 +36,15 @@ jobs:
         zip -r SATE-win64.zip SATE.exe ./data ./logs
         mkdir ./bin/win64 && mv SATE-win64.zip ./bin/win64
 
-    - name: Push Releases
+    - name: Commit Releases
       run: |
         git config --global user.name 'Josh Schmille'
         git config --global user.email 'josh.schmille@gmail.com'
-        git remote set-url --push origin https://joshschmille:$GITHUB_TOKEN@github.com/joshschmille/sate
         git add -A
         git commit -m "New Release"
-        git push origin master
+
+    - name: Push to master
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
