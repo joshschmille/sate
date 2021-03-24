@@ -40,7 +40,7 @@ jobs:
       run: |
         git config --global user.name 'Josh Schmille'
         git config --global user.email 'josh.schmille@gmail.com'
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/joshschmille/sate
+        git remote set-url --push origin https://joshschmille:$GITHUB_TOKEN@github.com/joshschmille/sate
         git add -A
         git commit -m "New Release"
         git push origin master
