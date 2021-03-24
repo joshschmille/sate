@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
     - name: Set up Go
       uses: actions/setup-go@v2
@@ -28,17 +31,22 @@ jobs:
       run: |
         go build -v .
         tar -czvf SATE-linux.tar.gz SATE ./data ./logs
-        mkdir ./bin/linux && mv SATE-linux.tar.gz ./bin/linux
+        mv SATE-linux.tar.gz ./bin
 
     - name: Build Windows
       run: |
         env GOOS=windows GOARCH=amd64 go build -v .
         zip -r SATE-win64.zip SATE.exe ./data ./logs
-        mkdir ./bin/win64 && mv SATE-win64.zip ./bin/win64
+        mv SATE-win64.zip ./bin
 
-    - name: Commit Releases
-      run: |
-        git config --global user.name 'Josh Schmille'
-        git config --global user.email 'josh.schmille@gmail.com'
-        git add --all
-        git commit -m "New Release"
+#    - name: Commit Releases
+#      run: |
+#        git config --global user.name 'Josh Schmille'
+#        git config --global user.email 'josh.schmille@gmail.com'
+#        git add --all
+#        git commit -m "New Release"
+
+    - name: Commit & Push changes
+          uses: actions-js/push@master
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
