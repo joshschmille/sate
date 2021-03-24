@@ -43,4 +43,4 @@ jobs:
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/joshschmille/sate
         git add -A
         git commit -m "New Release"
-        git push
+        git push origin master
