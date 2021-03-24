@@ -40,8 +40,7 @@ jobs:
       run: |
         git config --global user.name 'Josh Schmille'
         git config --global user.email 'josh.schmille@gmail.com'
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-        git checkout "${GITHUB_REF:11}"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/joshschmille/sate
         git add -A
         git commit -m "New Release"
         git push
