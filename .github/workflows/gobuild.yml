@@ -27,16 +27,21 @@ jobs:
 
     - name: Build Linux
       run: |
-        go build -v .
+        env GOOS=linux GOARCH=amd64 go build -o SATE-linux-amd64 -v .
 
     - name: Build Windows
       run: |
-        env GOOS=windows GOARCH=amd64 go build -v .
+        env GOOS=windows GOARCH=amd64 go build -o SATE-windows-amd64.exe -v .
+
+    - name: Build Darwin
+      run: |
+        env GOOS=darwin GOARCH=amd64 go build -o SATE-darwin-amd64 -v .
 
     - name: Archive Releases
       run: |
-        tar -czvf SATE-linux.tar.gz SATE ./data ./logs
-        zip -r SATE-win64.zip SATE.exe ./data ./logs
+        tar -czvf SATE-linux-amd64.tar.gz ./SATE-linux-amd64 ./data ./logs
+        zip -r SATE-windows-amd64.zip ./SATE-windows-amd64.exe ./data ./logs
+        zip -r SATE-darwin-amd64.zip ./SATE-darwin-amd64 ./data ./logs
 
     - name: Create Release
       uses: "marvinpinto/action-automatic-releases@latest"
