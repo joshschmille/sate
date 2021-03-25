@@ -32,6 +32,9 @@ I personally use [Dracula](https://draculatheme.com/windows-terminal), and it lo
 
 Please keep in mind that colors will vary from terminal to terminal. If it has a negative impact on the functionality, please [create an issue](https://github.com/joshschmille/sate/issues) letting me know what terminal & OS you are using, and include a screenshot if possible.
 
+### Commands
+![Commands](demo/cmds.png)
+
 ## Tips
 - The `help` command will output every single top level command available.
 - The game log window can be scrolled with your `Up` and `Down` arrow keys.
