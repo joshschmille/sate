@@ -17,8 +17,20 @@ It allows you to play Space Aces in a terminal window, or on a remote server if 
 - Extract the file wherever you choose, but make note of where you put it.
 - Within your terminal, navigate to the directory where you extracted SATE to. (Ex.: `cd C:\Users\Josh\Downloads\SATE-windows-amd64`).
 - Type `SATE` and hit `Enter`.
+
+This should look something like this:
+![Windows](demo/windows.png)
+
+To get it looking better, try various out some color schemes for your terminal!
+
+I personally use [Dracula](https://draculatheme.com/windows-terminal), and it looks like this under Windows:
+![Windows2](demo/windows2.png)
+
+Please keep in mind that colors will vary from terminal to terminal. If it has a negative impact on the functionality, please [create an issue](https://github.com/joshschmille/sate/issues) letting me know what terminal & OS you are using, and include a screenshot if possible.
+
 #### Mac
 [TODO]
+
 #### Linux
 - Within your terminal, download the latest release: `wget https://github.com/joshschmille/sate/releases/download/latest/SATE-linux-amd64.tar.gz`
 - Extract the file using `tar -xzvf SATE-linux-amd64.tar.gz`.
@@ -31,21 +43,6 @@ To change a given field, simply supply it, and the new content using the `charac
 
 - `character moxie +2` will set the `Moxie` field to `+2`.
 - `character name Willy Washington` will set the `Name` field to `Willy Washington`.
-
-### Note for Windows Users
-I highly recommend using [Windows Terminal](https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701) instead of simply double-clicking on `SATE.exe`, as the rendering within `cmd.exe` (the standard command prompt) is not great.
-
-Once Windows Terminal is installed, you can navigate to the directory where SATE.exe and its data/logs folders are (usind `cd` commands), then run `SATE.exe` from there.
-
-This should look something like this:
-![Windows](demo/windows.png)
-
-To get it looking better, try various out some color schemes for your terminal!
-
-I personally use [Dracula](https://draculatheme.com/windows-terminal), and it looks like this under Windows:
-![Windows2](demo/windows2.png)
-
-Please keep in mind that colors will vary from terminal to terminal. If it has a negative impact on the functionality, please [create an issue](https://github.com/joshschmille/sate/issues) letting me know what terminal & OS you are using, and include a screenshot if possible.
 
 ### Commands
 ![Commands](demo/cmds.png)
