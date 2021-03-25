@@ -38,19 +38,6 @@ jobs:
         tar -czvf SATE-linux.tar.gz SATE ./data ./logs
         zip -r SATE-win64.zip SATE.exe ./data ./logs
 
-    - name: Move Releases
-      run: |
-        mv SATE-linux.tar.gz ./bin
-        mv SATE-win64.zip ./bin
-
-    #- name: Commit & Push changes
-    #  uses: actions-js/push@master
-    #  with:
-    #    github_token: ${{ secrets.GITHUB_TOKEN }}
-    #    message: 'New Release'
-    #    author_email: josh.schmille@gmail.com
-    #    author_name: Josh Schmille
-
     - name: Create Release
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
@@ -59,5 +46,5 @@ jobs:
         prerelease: false
         title: "SATE"
         files: |
-          ./bin/*.zip
-          ./bin/*.tar.gz
+          *.zip
+          *.tar.gz
