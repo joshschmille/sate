@@ -52,7 +52,7 @@ func main() {
 	primaryColor := ui.Color(32)
 	secondaryColor := ui.Color(87)
 
-	filteredWords := [9]string{
+	filteredWords := []string{
 		"<Space>",
 		"<Enter>",
 		"<Backspace>",
@@ -62,6 +62,7 @@ func main() {
 		"<Left>",
 		"<Right>",
 		"<C-x>",
+		"<C-<Backspace>>",
 	}
 
 	gameLog.Title = "Game Log"
@@ -142,6 +143,12 @@ func main() {
 		case "<Space>":
 			inputBox.Text += " "
 		case "<Backspace>":
+			length := len(inputBox.Text)
+			if length > 0 {
+				inputBox.Text = inputBox.Text[:length-1]
+				ui.Render(inputBox)
+			}
+		case "<C-<Backspace>>":
 			length := len(inputBox.Text)
 			if length > 0 {
 				inputBox.Text = inputBox.Text[:length-1]
