@@ -34,18 +34,19 @@ func main() {
 	termWidth, termHeight = ui.TerminalDimensions()
 
 	ui.StyleParserColorMap = map[string]ui.Color{
-		"red":    ui.Color(196),
-		"blue":   ui.Color(32),
-		"black":  ui.Color(16),
-		"cyan":   ui.Color(87),
-		"yellow": ui.Color(226),
-		"orange": ui.Color(202),
-		"white":  ui.ColorWhite,
-		"clear":  ui.ColorClear,
-		"green":  ui.Color(46),
-		"purple": ui.Color(99),
-		"pink":   ui.Color(219),
-		"8":      ui.Color(8),
+		"orange":  ui.Color(202),
+		"purple":  ui.Color(99),
+		"pink":    ui.Color(219),
+		"8":       ui.Color(8),
+		"red":     ui.ColorRed,
+		"blue":    ui.ColorBlue,
+		"black":   ui.ColorBlack,
+		"cyan":    ui.ColorCyan,
+		"yellow":  ui.ColorYellow,
+		"white":   ui.ColorWhite,
+		"clear":   ui.ColorClear,
+		"green":   ui.ColorGreen,
+		"magenta": ui.ColorMagenta,
 	}
 
 	primaryColor := ui.Color(32)
