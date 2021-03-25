@@ -4,10 +4,25 @@ SATE is based on [Space Aces: TNG](https://www.drivethrurpg.com/product/346728/S
 It allows you to play Space Aces in a terminal window, or on a remote server if desired.
 
 ## How to Play
+### Overview
 - Download the [latest release](https://github.com/joshschmille/sate/releases/tag/latest) for your desired OS.
 - Extract the archive using your preferred tool (7zip, WinRAR, etc.).
 - Run the executable (SATE.exe / SATE) from within your terminal.
 - Use the `help` command in the game for more direction, if needed.
+
+### OS Specific Instructions
+#### Windows
+***First, I highly recommend installing something like [Windows Terminal](https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701) instead of using the built-in Windows command prompt. It will work, but colors are not supported.***
+Download the latest release for Windows [here](https://github.com/joshschmille/sate/releases/tag/latest).
+Extract the file wherever you choose, but make note of where you put it.
+Within your terminal, navigate to the directory where you extracted SATE to. (Ex.: `cd C:\Users\Josh\Downloads\SATE-windows-amd64`).
+Type `SATE` and hit `Enter`.
+#### Mac
+[TODO]
+#### Linux
+Within your terminal, download the latest release: `wget https://github.com/joshschmille/sate/releases/download/latest/SATE-linux-amd64.tar.gz`
+Extract the file using `tar -xzvf SATE-linux-amd64.tar.gz`.
+Run `./SATE-linux-amd64`
 
 ### Character Modification
 The majority of the commands provided within SATE will simply use the oracles within SA to generate an outcome for you. You also have the `log` command to output any content to the log, which I use for pretty much everything. However, there is also the `character` command, which allows you to change the data within the stats block on the top-right. This command works a little differently than the others.
@@ -17,7 +32,7 @@ To change a given field, simply supply it, and the new content using the `charac
 - `character moxie +2` will set the `Moxie` field to `+2`.
 - `character name Willy Washington` will set the `Name` field to `Willy Washington`.
 
-### Windows Users
+### Note for Windows Users
 I highly recommend using [Windows Terminal](https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701) instead of simply double-clicking on `SATE.exe`, as the rendering within `cmd.exe` (the standard command prompt) is not great.
 
 Once Windows Terminal is installed, you can navigate to the directory where SATE.exe and its data/logs folders are (usind `cd` commands), then run `SATE.exe` from there.
