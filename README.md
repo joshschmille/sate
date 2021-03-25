@@ -11,6 +11,6 @@ It allows you to play Space Aces in a terminal window, or on a remote server if 
 - Use the `help` command in the game for more direction, if needed.
 
 ## What Does It Look Like?!
-![SATE Demo](demo/demo.gif)
+![SATE Demo](demo/demo.gif =400x)
 
 Please keep in mind that colors will vary from terminal to terminal. If it has a negative impact on the functionality, please [create an issue](https://github.com/joshschmille/sate/issues) letting me know what terminal & OS you are using, and include a screenshot if possible.
