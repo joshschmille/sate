@@ -240,15 +240,6 @@ func renderOutput(s string) {
 	ui.Render(gameLog)
 }
 
-func loadCharacter() {
-	stats, err := readNameFile("./logs/character")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	statBlock.Text = "Name: " + stats[0] + "\nMoxie: " + stats[1] + "\nSmarts: " + stats[2] + "\nWiggles: " + stats[3] + "\nFriends: " + stats[4] + "\nPockets: " + stats[5] + "\nGumption: " + stats[6]
-}
-
 func writeLog(s string) {
 	f, err := os.OpenFile("logs/all", os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {

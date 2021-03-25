@@ -4,6 +4,7 @@ import "log"
 
 type ruin struct {
 	ruinType, aesthetic, purpose, danger, depth, threat string
+	treasure                                            treasure
 }
 
 func (r *ruin) generate() ruin {
@@ -13,6 +14,7 @@ func (r *ruin) generate() ruin {
 	r.danger = generateDanger()
 	r.depth = generateDepth()
 	r.threat = generateThreat()
+	r.treasure.generate()
 
 	return *r
 }
@@ -32,7 +34,7 @@ func (r *ruin) render(req string) {
 	case "threat":
 		renderOutput("Threat: " + r.threat)
 	case "treasure":
-		renderOutput("Treasure: TREASURE")
+		r.treasure.render("all")
 	default:
 		renderOutput("[--- Star Ruin ---](fg:purple)")
 		renderOutput("Type: " + r.ruinType)
@@ -41,7 +43,7 @@ func (r *ruin) render(req string) {
 		renderOutput("Danger Level: " + r.danger)
 		renderOutput("Depth: " + r.depth)
 		renderOutput("Threat: " + r.threat)
-		renderOutput("Treasure: TREASURE")
+		r.treasure.render("all")
 	}
 }
 
