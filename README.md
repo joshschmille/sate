@@ -12,17 +12,17 @@ It allows you to play Space Aces in a terminal window, or on a remote server if 
 
 ### OS Specific Instructions
 #### Windows
-***First, I highly recommend installing something like [Windows Terminal](https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701) instead of using the built-in Windows command prompt. It will work, but colors are not supported.***
-Download the latest release for Windows [here](https://github.com/joshschmille/sate/releases/tag/latest).
-Extract the file wherever you choose, but make note of where you put it.
-Within your terminal, navigate to the directory where you extracted SATE to. (Ex.: `cd C:\Users\Josh\Downloads\SATE-windows-amd64`).
-Type `SATE` and hit `Enter`.
+- ***First, I highly recommend installing something like [Windows Terminal](https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701) instead of using the built-in Windows command prompt. It will work, but colors are not supported.***
+- Download the latest release for Windows [here](https://github.com/joshschmille/sate/releases/tag/latest).
+- Extract the file wherever you choose, but make note of where you put it.
+- Within your terminal, navigate to the directory where you extracted SATE to. (Ex.: `cd C:\Users\Josh\Downloads\SATE-windows-amd64`).
+- Type `SATE` and hit `Enter`.
 #### Mac
 [TODO]
 #### Linux
-Within your terminal, download the latest release: `wget https://github.com/joshschmille/sate/releases/download/latest/SATE-linux-amd64.tar.gz`
-Extract the file using `tar -xzvf SATE-linux-amd64.tar.gz`.
-Run `./SATE-linux-amd64`
+- Within your terminal, download the latest release: `wget https://github.com/joshschmille/sate/releases/download/latest/SATE-linux-amd64.tar.gz`
+- Extract the file using `tar -xzvf SATE-linux-amd64.tar.gz`.
+- Run `./SATE-linux-amd64`
 
 ### Character Modification
 The majority of the commands provided within SATE will simply use the oracles within SA to generate an outcome for you. You also have the `log` command to output any content to the log, which I use for pretty much everything. However, there is also the `character` command, which allows you to change the data within the stats block on the top-right. This command works a little differently than the others.
