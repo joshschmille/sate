@@ -6,6 +6,7 @@ import (
 	"strconv"
 )
 
+// cmdRoll generates and renders a D20 and D6 roll.
 func cmdRoll(a []string) {
 	output := ""
 
@@ -14,10 +15,12 @@ func cmdRoll(a []string) {
 	renderOutput(output)
 }
 
+// cmdLog outputs all content after the command to the game log.
 func cmdLog(a []string) {
 	renderOutput(combineArgsToString(a[0:]))
 }
 
+// cmdName generates and renders a random character name.
 func cmdName(a []string) {
 	names, err := readNameFile("./data/character.names")
 	if err != nil {
@@ -29,6 +32,7 @@ func cmdName(a []string) {
 	renderOutput(names[rnd])
 }
 
+// cmdLikely uses "Ask The AI" to generate a response.
 func cmdLikely(a []string) {
 	output := ""
 
@@ -47,6 +51,7 @@ func cmdLikely(a []string) {
 	renderOutput(output)
 }
 
+// cmdPossibly uses "Ask The AI" to generate a response.
 func cmdPossibly(a []string) {
 	output := ""
 
@@ -65,6 +70,7 @@ func cmdPossibly(a []string) {
 	renderOutput(output)
 }
 
+// cmdUnlikely uses "Ask The AI" to generate a response.
 func cmdUnlikely(a []string) {
 	output := ""
 
@@ -83,12 +89,14 @@ func cmdUnlikely(a []string) {
 	renderOutput(output)
 }
 
+// cmdMission generates a mission, and renders it based on user args.
 func cmdMission(a []string) {
 	m := mission{}
 	m.generate()
 	m.render(a[0])
 }
 
+// cmdEvent generates an event, and renders it.
 func cmdEvent(a []string) {
 	eventType := generateNumber(1, 6)
 	if eventType < 5 {
@@ -105,42 +113,50 @@ func cmdEvent(a []string) {
 	}
 }
 
+// cmdRuin generates a ruin, and renders it based on user args.
 func cmdRuin(a []string) {
 	r := ruin{}
 	r.generate()
 	r.render(a[0])
 }
 
+// cmdMonster generates a monster, and renders it based on user args.
 func cmdMonster(a []string) {
 	m := monster{}
 	m.generate()
 	m.render(a[0])
 }
 
+// cmdTreasure generates a treasure, and renders it based on user args.
 func cmdTreasure(a []string) {
 	t := treasure{}
 	t.generate()
 	t.render(a[0])
 }
 
+// cmdHazard generates a hazard, and renders it.
 func cmdHazard(a []string) {
 	h := hazard{}
 	h.generate()
 	h.render()
 }
 
+// cmdGizmo generates a gizmo, and renders it based on user args.
 func cmdGizmo(a []string) {
 	g := gizmo{}
 	g.generate()
 	g.render(a[0])
 }
 
+// cmdShip generates a ship, and renders it based on user args.
 func cmdShip(a []string) {
 	s := ship{}
 	s.generate()
 	s.render(a[0])
 }
 
+// cmdExplore generates a planetary exploration event, and
+// renders it.
 func cmdExplore(a []string) {
 	rnd := generateNumber(1, 6)
 	one, two := generateSuddenEvent()
@@ -160,60 +176,71 @@ func cmdExplore(a []string) {
 	}
 }
 
+// cmdPlanet generates a planet, and renders it based on user args.
 func cmdPlanet(a []string) {
 	p := planet{}
 	p.generate()
 	p.render(a[0])
 }
 
+// cmdNavigate generates a space encounter, and renders it.
 func cmdNavigate(a []string) {
 	e := encounter{}
 	e.generate()
 	e.render()
 }
 
+// cmdSector generates a sector object, and renders it based on user args.
 func cmdSector(a []string) {
 	s := sector{}
 	s.generate()
 	s.render(a[0])
 }
 
+// cmdNpc generates an NPC, and renders it based on user args.
 func cmdNpc(a []string) {
 	n := npc{}
 	n.generate()
 	n.render(a[0])
 }
 
+// cmdMech generates a mech, and renders it based on user args.
 func cmdMech(a []string) {
 	m := mech{}
 	m.generate()
 	m.render(a[0])
 }
 
+// cmdMassiveMonster generates a massive monster, and renders
+// it based on user args.
 func cmdMassiveMonster(a []string) {
 	mm := massivemonster{}
 	mm.generate()
 	mm.render()
 }
 
+// cmdBeasty generates a beasty, and renders it based on user args.
 func cmdBeasty(a []string) {
 	b := beasty{}
 	b.generate()
 	b.render(a[0])
 }
 
+// cmdMacguffin generates a macguffin, and renders it based on user args.
 func cmdMacguffin(a []string) {
 	m := macguffin{}
 	m.generate()
 	m.render(a[0])
 }
 
+// cmdBackstory generates a backstory, and renders it based on user args.
 func cmdBackstory(a []string) {
 	bs := backstory{}
 	bs.generate()
 	bs.render()
 }
 
+// cmdCharacter is used to modify character data.
 func cmdCharacter(a []string) {
 	switch a[0] {
 	case "name":
@@ -235,6 +262,7 @@ func cmdCharacter(a []string) {
 	}
 }
 
+// cmdHelp renders help data to the gamelog.
 func cmdHelp(a []string) {
 	lines, err := readNameFile("./data/help.names")
 	if err != nil {

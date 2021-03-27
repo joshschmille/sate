@@ -2,10 +2,12 @@ package main
 
 import "log"
 
+// An event contains generation for Episode Events
 type event struct {
 	one, two string
 }
 
+// generate generates an event
 func (e *event) generate(t int) event {
 
 	switch t {
@@ -22,10 +24,12 @@ func (e *event) generate(t int) event {
 	return *e
 }
 
+// render renders the event to the game log.
 func (e *event) render() {
 	renderOutput(e.one + " | " + e.two)
 }
 
+// generateScuffleEvent return two strings containing scuffle values.
 func generateScuffleEvent() (string, string) {
 	scuffles, err := readNameFile("./data/events/scuffle.names")
 	if err != nil {
@@ -42,6 +46,7 @@ func generateScuffleEvent() (string, string) {
 	return enemy, tactic
 }
 
+// generateSocialEvent return two strings containing social values.
 func generateSocialEvent() (string, string) {
 	socials, err := readNameFile("./data/events/social.names")
 	if err != nil {
@@ -58,6 +63,7 @@ func generateSocialEvent() (string, string) {
 	return social, bearing
 }
 
+// generateEncounterEvent return two strings containing encounter values.
 func generateEncounterEvent() (string, string) {
 	encounters, err := readNameFile("./data/events/encounter.names")
 	if err != nil {
@@ -67,6 +73,7 @@ func generateEncounterEvent() (string, string) {
 	return encounters[generateNumber(0, len(encounters)-1)], generateFlavor()
 }
 
+// generateDifficultyEvent return two strings containing difficulty values.
 func generateDifficultyEvent() (string, string) {
 	difficulties, err := readNameFile("./data/events/difficulty.names")
 	if err != nil {

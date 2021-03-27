@@ -2,6 +2,7 @@ package main
 
 import "strconv"
 
+// A backstory contains generation for Backstory Baloney
 type backstory struct {
 	origin  int
 	origin1 planet
@@ -14,6 +15,7 @@ type backstory struct {
 	faction1, faction2 string
 }
 
+// generate generates a backstory
 func (b *backstory) generate() backstory {
 
 	b.origin = generateNumber(1, 6)
@@ -42,6 +44,7 @@ func (b *backstory) generate() backstory {
 	return *b
 }
 
+// render renders the backstory to the game log.
 func (b *backstory) render() {
 	renderOutput("--- Backstory ---")
 	renderOutput("[Place of Origin](fg:cyan)")
@@ -58,20 +61,21 @@ func (b *backstory) render() {
 	renderOutput("[Early Life](fg:cyan)")
 	renderOutput("- Goal: " + b.goal + " | Object: " + b.object)
 
-	howditgo()
+	howdItGo()
 
 	renderOutput("[First Steps](fg:cyan)")
 	renderOutput("You worked for " + b.faction1)
 
-	howditgo()
+	howdItGo()
 
 	renderOutput("[And Then...](fg:cyan)")
 	renderOutput("You worked for " + b.faction2)
 
-	howditgo()
+	howdItGo()
 }
 
-func howditgo() {
+// howdItGo renders the result of "How'd It Go?" to the game log.
+func howdItGo() {
 	rnd := generateNumber(1, 6)
 	switch rnd {
 	case 1:
@@ -91,6 +95,7 @@ func howditgo() {
 	}
 }
 
+// generateWoo generates a Woo, and renders it to the game log.
 func generateWoo() {
 	renderOutput("[WOO](fg:green)")
 	rnd := generateNumber(1, 6)
@@ -129,6 +134,7 @@ func generateWoo() {
 	}
 }
 
+// generateWoo generates a Woe, and renders it to the game log.
 func generateWoe() {
 	renderOutput("[WOE](fg:red)")
 	rnd := generateNumber(1, 6)

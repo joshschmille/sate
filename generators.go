@@ -3,43 +3,28 @@ package main
 import (
 	"log"
 	"math/rand"
+	"strconv"
 	"time"
 )
 
+// generateNumber returns an int within the min and max provided.
 func generateNumber(min int, max int) int {
 	rand.Seed(time.Now().UnixNano())
 	return rand.Intn((max+1)-min) + min
 }
 
+// generateFlavor returns a string contain a flavor value.
 func generateFlavor() string {
-	flavors01, err := readNameFile("./data/events/flavor01.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	flavors02, err := readNameFile("./data/events/flavor02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	flavors03, err := readNameFile("./data/events/flavor03.names")
+	rnd := generateNumber(1, 3)
+	flavors, err := readNameFile("./data/events/flavor0" + strconv.Itoa(rnd) + ".names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
 
-	flavorList := generateNumber(1, 3)
-	flavor := ""
-
-	switch flavorList {
-	case 1:
-		flavor = flavors01[generateNumber(0, len(flavors01)-1)]
-	case 2:
-		flavor = flavors02[generateNumber(0, len(flavors02)-1)]
-	case 3:
-		flavor = flavors03[generateNumber(0, len(flavors03)-1)]
-	}
-
-	return flavor
+	return flavors[generateNumber(0, len(flavors)-1)]
 }
 
+// generateSuddenEvent returns two strings containing event values.
 func generateSuddenEvent() (string, string) {
 	rnd := generateNumber(1, 6)
 	one, two := "", ""

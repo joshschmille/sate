@@ -1,66 +1,41 @@
 package main
 
-import "log"
+import (
+	"log"
+	"strconv"
+)
 
+// A gizmo contains generation for Gizmos & Gadgets
 type gizmo struct {
 	name, effect, durability string
 }
 
+// generate generates a gizmo
 func (g *gizmo) generate() gizmo {
 
-	types01, err := readNameFile("./data/gizmos/type01.names")
+	typeRnd := generateNumber(1, 3)
+	prefixRnd := generateNumber(1, 2)
+	formRnd := generateNumber(1, 3)
+	effectRnd := generateNumber(1, 3)
+	aspectRnd := generateNumber(1, 3)
+
+	types, err := readNameFile("./data/gizmos/type0" + strconv.Itoa(typeRnd) + ".names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
-	types02, err := readNameFile("./data/gizmos/type02.names")
+	prefixes, err := readNameFile("./data/gizmos/prefix0" + strconv.Itoa(prefixRnd) + ".names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
-	types03, err := readNameFile("./data/gizmos/type03.names")
+	forms, err := readNameFile("./data/gizmos/form0" + strconv.Itoa(formRnd) + ".names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
-	prefixes01, err := readNameFile("./data/gizmos/prefix01.names")
+	effects, err := readNameFile("./data/gizmos/effect0" + strconv.Itoa(effectRnd) + ".names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
-	prefixes02, err := readNameFile("./data/gizmos/prefix02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	forms01, err := readNameFile("./data/gizmos/form01.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	forms02, err := readNameFile("./data/gizmos/form02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	forms03, err := readNameFile("./data/gizmos/form03.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	effects01, err := readNameFile("./data/gizmos/effect01.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	effects02, err := readNameFile("./data/gizmos/effect02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	effects03, err := readNameFile("./data/gizmos/effect03.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	aspects01, err := readNameFile("./data/gizmos/aspect01.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	aspects02, err := readNameFile("./data/gizmos/aspect02.names")
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-	aspects03, err := readNameFile("./data/gizmos/aspect03.names")
+	aspects, err := readNameFile("./data/gizmos/aspect0" + strconv.Itoa(aspectRnd) + ".names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
@@ -72,49 +47,12 @@ func (g *gizmo) generate() gizmo {
 	name := ""
 	effect := ""
 
-	typeRnd := generateNumber(1, 6)
-	prefixRnd := generateNumber(1, 6)
-	formRnd := generateNumber(1, 6)
-	effectRnd := generateNumber(1, 6)
-	aspectRnd := generateNumber(1, 6)
+	name += types[generateNumber(0, len(types)-1)] + " "
+	name += prefixes[generateNumber(0, len(prefixes)-1)]
+	name += forms[generateNumber(0, len(forms)-1)]
 
-	if typeRnd < 3 {
-		name += types01[generateNumber(0, len(types01)-1)] + " "
-	} else if typeRnd < 5 {
-		name += types02[generateNumber(0, len(types02)-1)] + " "
-	} else {
-		name += types03[generateNumber(0, len(types03)-1)] + " "
-	}
-
-	if prefixRnd < 4 {
-		name += prefixes01[generateNumber(0, len(prefixes01)-1)]
-	} else {
-		name += prefixes02[generateNumber(0, len(prefixes02)-1)]
-	}
-
-	if formRnd < 3 {
-		name += forms01[generateNumber(0, len(forms01)-1)]
-	} else if formRnd < 5 {
-		name += forms02[generateNumber(0, len(forms02)-1)]
-	} else {
-		name += forms03[generateNumber(0, len(forms03)-1)]
-	}
-
-	if effectRnd < 3 {
-		effect += effects01[generateNumber(0, len(effects01)-1)] + " "
-	} else if effectRnd < 5 {
-		effect += effects02[generateNumber(0, len(effects02)-1)] + " "
-	} else {
-		effect += effects03[generateNumber(0, len(effects03)-1)] + " "
-	}
-
-	if aspectRnd < 3 {
-		effect += aspects01[generateNumber(0, len(aspects01)-1)]
-	} else if aspectRnd < 5 {
-		effect += aspects02[generateNumber(0, len(aspects02)-1)]
-	} else {
-		effect += aspects03[generateNumber(0, len(aspects03)-1)]
-	}
+	effect += effects[generateNumber(0, len(effects)-1)] + " "
+	effect += aspects[generateNumber(0, len(aspects)-1)]
 
 	g.name = name
 	g.effect = effect

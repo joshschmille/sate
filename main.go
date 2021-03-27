@@ -1,4 +1,3 @@
-// Made by joshschmille
 package main
 
 import (
@@ -15,11 +14,15 @@ import (
 	"github.com/gizak/termui/v3/widgets"
 )
 
+// Create the widgets for the UI layout.
 var gameLog = widgets.NewList()
 var missionBlock = widgets.NewParagraph()
 var statBlock = widgets.NewParagraph()
-var player = character{}
 var macguffinBlock = widgets.NewImage(nil)
+
+var player = character{}
+
+// Set the macguffin block to be hidden at first run.
 var mgToggle = false
 
 var termWidth = 0
@@ -179,6 +182,7 @@ func main() {
 	}
 }
 
+// readNameFile returns a string slice containing the lines read from the provided file path.
 func readNameFile(path string) ([]string, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -194,7 +198,9 @@ func readNameFile(path string) ([]string, error) {
 	return lines, scanner.Err()
 }
 
-func Chunks(s string, chunkSize int) []string {
+// splitStringByMax returns a string slice containing the data from the provided string
+// split into chunks based on the given maximum size.
+func splitStringByMax(s string, chunkSize int) []string {
 	if chunkSize >= len(s) {
 		return []string{s}
 	}
@@ -215,6 +221,8 @@ func Chunks(s string, chunkSize int) []string {
 	return chunks
 }
 
+// combineArgsToString returns a string containing each string within the provided string
+// slice, separated by " ".
 func combineArgsToString(s []string) string {
 	output := ""
 	for i := 0; i < len(s); i++ {
@@ -226,8 +234,13 @@ func combineArgsToString(s []string) string {
 	return output
 }
 
+// renderOutput accepts a string of any length and uses splitStringByMax() to split it
+// based on the maximum length, which is determined by the width of the terminal window.
+// It then outputs those strings to the game log window, scrolls it to the bottom, and
+// triggers it to re-render to show the changes.
+// It also sends the content of the original string to the writeLog() func.
 func renderOutput(s string) {
-	chunked := Chunks(s, termWidth-42)
+	chunked := splitStringByMax(s, termWidth-42)
 	for i := 0; i < len(chunked); i++ {
 		gameLog.Rows = append(gameLog.Rows, chunked[i])
 	}
@@ -240,6 +253,7 @@ func renderOutput(s string) {
 	ui.Render(gameLog)
 }
 
+// writeLog accepts a string of any length, and appends the string to the log file.
 func writeLog(s string) {
 	f, err := os.OpenFile("logs/all", os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
@@ -260,6 +274,8 @@ func writeLog(s string) {
 	}
 }
 
+// parseArgs accepts a string, splits it using " " as the delimiter, and determines if it
+// is a valid command or not, sending everything after the first word as a list of args.
 func parseArgs(s string) {
 	if len(s) > 0 {
 		all := strings.Fields(s)
