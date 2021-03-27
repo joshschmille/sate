@@ -2,11 +2,13 @@ package main
 
 import "log"
 
+// A ruin contains generation for Star Ruins & Space Hulks
 type ruin struct {
 	ruinType, aesthetic, purpose, danger, depth, threat string
 	treasure                                            treasure
 }
 
+// generate generates a ruin
 func (r *ruin) generate() ruin {
 	r.ruinType = generateRuinType()
 	r.aesthetic = generateAesthetic()
@@ -19,6 +21,7 @@ func (r *ruin) generate() ruin {
 	return *r
 }
 
+// render renders the ruin to the game log.
 func (r *ruin) render(req string) {
 	switch req {
 	case "type":
@@ -47,6 +50,7 @@ func (r *ruin) render(req string) {
 	}
 }
 
+// generateRuinType returns a string containing a ruin type value.
 func generateRuinType() string {
 	types, err := readNameFile("./data/ruins/type.names")
 	if err != nil {
@@ -55,6 +59,7 @@ func generateRuinType() string {
 	return types[generateNumber(0, len(types)-1)]
 }
 
+// generateAesthetic returns a string containing a aesthetic value.
 func generateAesthetic() string {
 	aesthetics, err := readNameFile("./data/ruins/aesthetic.names")
 	if err != nil {
@@ -64,6 +69,7 @@ func generateAesthetic() string {
 	return aesthetics[generateNumber(0, len(aesthetics)-1)]
 }
 
+// generatePurpose returns a string containing a purpose value.
 func generatePurpose() string {
 	purposes, err := readNameFile("./data/ruins/purpose.names")
 	if err != nil {
@@ -73,6 +79,7 @@ func generatePurpose() string {
 	return purposes[generateNumber(0, len(purposes)-1)]
 }
 
+// generateDanger returns a string containing a danger value.
 func generateDanger() string {
 	danger := generateNumber(1, 20)
 
@@ -85,6 +92,7 @@ func generateDanger() string {
 	}
 }
 
+// generateDepth returns a string containing a depth value.
 func generateDepth() string {
 	depths, err := readNameFile("./data/ruins/depth.names")
 	if err != nil {
@@ -94,6 +102,7 @@ func generateDepth() string {
 	return depths[generateNumber(0, len(depths)-1)]
 }
 
+// generateThreat returns a string containing a threat value.
 func generateThreat() string {
 	threats, err := readNameFile("./data/ruins/threat.names")
 	if err != nil {

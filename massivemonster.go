@@ -5,12 +5,14 @@ import (
 	"strconv"
 )
 
+// A massivemonster contains generation for Massive Monsters
 type massivemonster struct {
 	class                                 int
 	mmType, weakSpot, motivation, zEffect string
 	abilities, natures                    []string
 }
 
+// generate generates a massive monster.
 func (mm *massivemonster) generate() massivemonster {
 	mm.class = generateNumber(1, 3)
 	mm.mmType = generateMMType()
@@ -24,6 +26,7 @@ func (mm *massivemonster) generate() massivemonster {
 	return *mm
 }
 
+// render renders the massive monster to the game log.
 func (mm *massivemonster) render() {
 
 	renderOutput("--- Massive Monster ---")
@@ -50,6 +53,7 @@ func (mm *massivemonster) render() {
 
 }
 
+// generateMMType returns a string containing a massive monster type value.
 func generateMMType() string {
 	rnd := generateNumber(1, 2)
 	types, err := readNameFile("./data/massivemonsters/type0" + strconv.Itoa(rnd) + ".names")
@@ -66,6 +70,7 @@ func generateMMType() string {
 	return types[generateNumber(0, len(types)-1)] + " " + forms[generateNumber(0, len(forms)-1)]
 }
 
+// generateAbilities returns a string slice containing 1-3 ability values.
 func generateAbilities(c int) []string {
 	output := []string{}
 
@@ -89,6 +94,7 @@ func generateAbilities(c int) []string {
 	return output
 }
 
+// generateNatures returns a string slice containing 1-3 nature values.
 func generateNatures(c int) []string {
 	output := []string{}
 
@@ -104,6 +110,7 @@ func generateNatures(c int) []string {
 	return output
 }
 
+// generateWeakSpot returns a string containing a weak spot value.
 func generateWeakSpot() string {
 	spots, err := readNameFile("./data/massivemonsters/weakspot.names")
 	if err != nil {
@@ -113,6 +120,7 @@ func generateWeakSpot() string {
 	return spots[generateNumber(0, len(spots)-1)]
 }
 
+// generateMotivation returns a string containing a motivation value.
 func generateMotivation() string {
 	motivations, err := readNameFile("./data/massivemonsters/motivation.names")
 	if err != nil {
@@ -122,6 +130,7 @@ func generateMotivation() string {
 	return motivations[generateNumber(0, len(motivations)-1)]
 }
 
+// generateZEffect returns a string containing a ZEffect value.
 func generateZEffect() string {
 	effects, err := readNameFile("./data/massivemonsters/zeffect.names")
 	if err != nil {

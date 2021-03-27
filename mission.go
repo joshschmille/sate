@@ -6,10 +6,12 @@ import (
 	ui "github.com/gizak/termui/v3"
 )
 
+// A mission contains generation for Mission Generator
 type mission struct {
 	faction, mission, objective, location, aspect, opposition, agenda, snag string
 }
 
+// generate generates a mission.
 func (m *mission) generate() mission {
 	m.faction = generateFaction()
 	m.mission = generateMission()
@@ -22,6 +24,7 @@ func (m *mission) generate() mission {
 	return *m
 }
 
+// render renders the mission to the game log and the mission block.
 func (m *mission) render(req string) {
 	switch req {
 	case "faction":
@@ -57,6 +60,7 @@ func (m *mission) render(req string) {
 	}
 }
 
+// generateFaction returns a string containing a faction value.
 func generateFaction() string {
 	factions, err := readNameFile("./data/missions/faction.names")
 	if err != nil {
@@ -66,6 +70,7 @@ func generateFaction() string {
 	return factions[generateNumber(0, len(factions)-1)]
 }
 
+// generateMission returns a string containing a mission value.
 func generateMission() string {
 	missions, err := readNameFile("./data/missions/mission.names")
 	if err != nil {
@@ -74,6 +79,7 @@ func generateMission() string {
 	return missions[generateNumber(0, len(missions)-1)]
 }
 
+// generateObjective returns a string containing an objective value.
 func generateObjective() string {
 	objectives, err := readNameFile("./data/missions/objective.names")
 	if err != nil {
@@ -82,6 +88,7 @@ func generateObjective() string {
 	return objectives[generateNumber(0, len(objectives)-1)]
 }
 
+// generateLocation returns a string containing a location value.
 func generateLocation() string {
 	locations, err := readNameFile("./data/missions/location.names")
 	if err != nil {
@@ -91,6 +98,7 @@ func generateLocation() string {
 	return locations[generateNumber(0, len(locations)-1)]
 }
 
+// generateLocationAspect returns a string containing a location aspect value.
 func generateLocationAspect() string {
 	aspects, err := readNameFile("./data/missions/aspect.names")
 	if err != nil {
@@ -100,6 +108,7 @@ func generateLocationAspect() string {
 	return aspects[generateNumber(0, len(aspects)-1)]
 }
 
+// generateOpposition returns a string containing a opposition value.
 func generateOpposition() string {
 	oppositions, err := readNameFile("./data/missions/opposition.names")
 	if err != nil {
@@ -109,6 +118,7 @@ func generateOpposition() string {
 	return oppositions[generateNumber(0, len(oppositions)-1)]
 }
 
+// generateAgenda returns a string containing a agenda value.
 func generateAgenda() string {
 	agendas, err := readNameFile("./data/missions/agenda.names")
 	if err != nil {
@@ -118,6 +128,7 @@ func generateAgenda() string {
 	return agendas[generateNumber(0, len(agendas)-1)]
 }
 
+// generateSnag returns a string containing a snag value.
 func generateSnag() string {
 	snags, err := readNameFile("./data/missions/snag.names")
 	if err != nil {

@@ -10,7 +10,7 @@ type gizmo struct {
 	name, effect, durability string
 }
 
-// generate generates a gizmo
+// generate generates a gizmo.
 func (g *gizmo) generate() gizmo {
 
 	typeRnd := generateNumber(1, 3)
@@ -61,6 +61,7 @@ func (g *gizmo) generate() gizmo {
 	return *g
 }
 
+// render renders the gizmo to the game log.
 func (g *gizmo) render(req string) {
 	switch req {
 	case "name":

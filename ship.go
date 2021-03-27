@@ -5,11 +5,13 @@ import (
 	"strconv"
 )
 
+// A ship contains generation for Starship Shenanigans
 type ship struct {
 	shipType, name, origin string
 	perks, quirks          []string
 }
 
+// generate generates a ship.
 func (s *ship) generate() ship {
 	s.name = generateShipName()
 	s.origin = generateShipOrigin()
@@ -51,6 +53,7 @@ func (s *ship) generate() ship {
 	return *s
 }
 
+// render renders the ship to the game log.
 func (s *ship) render(req string) {
 	switch req {
 	case "name":
@@ -75,6 +78,8 @@ func (s *ship) render(req string) {
 	}
 }
 
+// generateShipName returns a string containing a ship name, pieced together
+// in a variety of ways.
 func generateShipName() string {
 	names1, err := readNameFile("./data/shipnames/01.names")
 	if err != nil {
@@ -119,6 +124,7 @@ func generateShipName() string {
 	return "Something is wrong with generating a ship name."
 }
 
+// generateShipPerk returns a string containing a ship perk value.
 func generateShipPerk() string {
 	rnd := generateNumber(1, 6)
 	perks, err := readNameFile("./data/ships/perk0" + strconv.Itoa(rnd) + ".names")
@@ -129,6 +135,7 @@ func generateShipPerk() string {
 	return perks[generateNumber(0, len(perks)-1)]
 }
 
+// generateShipQuirk returns a string containing a ship quirk value.
 func generateShipQuirk() string {
 	rnd := generateNumber(1, 3)
 	quirks, err := readNameFile("./data/ships/quirk0" + strconv.Itoa(rnd) + ".names")
@@ -139,6 +146,7 @@ func generateShipQuirk() string {
 	return quirks[generateNumber(0, len(quirks)-1)]
 }
 
+// generateShipOrigin returns a string containing a ship origin value.
 func generateShipOrigin() string {
 	origins, err := readNameFile("./data/ships/origin.names")
 	if err != nil {

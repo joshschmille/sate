@@ -2,10 +2,12 @@ package main
 
 import "log"
 
+// A treasure contains generation for Star Ruins & Space Hulks
 type treasure struct {
 	aspect, feature, form string
 }
 
+// generate generates a treasure.
 func (t *treasure) generate() treasure {
 	t.aspect = generateTreasureAspect()
 	t.feature = generateTreasureFeature()
@@ -14,6 +16,7 @@ func (t *treasure) generate() treasure {
 	return *t
 }
 
+// render renders the treasure to the game log.
 func (t *treasure) render(req string) {
 	switch req {
 	case "aspect":
@@ -28,6 +31,7 @@ func (t *treasure) render(req string) {
 	}
 }
 
+// generateTreasureAspect returns a string containing a treasure aspect value.
 func generateTreasureAspect() string {
 	aspects, err := readNameFile("./data/monsters/treasure01.names")
 	if err != nil {
@@ -37,6 +41,7 @@ func generateTreasureAspect() string {
 	return aspects[generateNumber(0, len(aspects)-1)]
 }
 
+// generateTreasureFeature returns a string containing a treasure feature value.
 func generateTreasureFeature() string {
 	features, err := readNameFile("./data/monsters/treasure02.names")
 	if err != nil {
@@ -46,6 +51,7 @@ func generateTreasureFeature() string {
 	return features[generateNumber(0, len(features)-1)]
 }
 
+// generateTreasureForm returns a string containing a treasure form value.
 func generateTreasureForm() string {
 	forms, err := readNameFile("./data/monsters/treasure03.names")
 	if err != nil {

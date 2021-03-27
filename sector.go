@@ -5,10 +5,12 @@ import (
 	"strconv"
 )
 
+// A sector contains generation for Hyperspace Hubris
 type sector struct {
 	object, coords, size string
 }
 
+// generate generates a sector object.
 func (s *sector) generate() sector {
 	rnd := generateNumber(1, 6)
 	switch rnd {
@@ -56,6 +58,7 @@ func (s *sector) generate() sector {
 	return *s
 }
 
+// render renders the sector object to the game log.
 func (s *sector) render(req string) {
 	if s.object == "Planet" {
 		renderOutput("--- Planet ---")
@@ -83,6 +86,7 @@ func (s *sector) render(req string) {
 	renderOutput("Size: " + s.size)
 }
 
+// generateStrangeAnomaly returns a string containing a strange anomaly value.
 func generateStrangeAnomaly() string {
 	anomalies, err := readNameFile("./data/sectors/anomaly.names")
 	if err != nil {

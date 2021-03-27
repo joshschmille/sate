@@ -9,11 +9,13 @@ import (
 	ui "github.com/gizak/termui/v3"
 )
 
+// A macguffin contains generation for Macguffin Maker
 type macguffin struct {
 	finish string
 	imgId  int
 }
 
+// generate generates a macguffin.
 func (m *macguffin) generate() macguffin {
 	m.finish = generateMacguffinFinish()
 	m.imgId = generateMacguffinImageId()
@@ -21,6 +23,7 @@ func (m *macguffin) generate() macguffin {
 	return *m
 }
 
+// render renders the macguffin to the macguffin block.
 func (m *macguffin) render(req string) {
 	image, _, err := image.Decode(base64.NewDecoder(base64.StdEncoding, strings.NewReader(mgImages[generateNumber(0, len(mgImages)-1)])))
 	if err != nil {
@@ -36,6 +39,7 @@ func (m *macguffin) render(req string) {
 	ui.Render(macguffinBlock)
 }
 
+// generateMacguffinFinish returns a string containing the finisher.
 func generateMacguffinFinish() string {
 	rnd := generateNumber(1, 3)
 
@@ -51,10 +55,14 @@ func generateMacguffinFinish() string {
 	return "Oops."
 }
 
+// generateMacguffinImageId returns a random int to choose which icon to display.
 func generateMacguffinImageId() int {
 	return generateNumber(0, len(mgImages)-1)
 }
 
+// calculateMacguffinRect returns the startX, startY, endX, and endY for the
+// macguffinBlock's positioning. If the game log window is wider than its max
+// width, it pins it -1,-1 from the top right corner of the game log.
 func calculateMacguffinRect() (int, int, int, int) {
 	mgMaxWidth := 49
 	xOffset := 1
