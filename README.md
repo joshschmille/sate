@@ -3,6 +3,16 @@ SATE is based on [Space Aces: TNG](https://www.drivethrurpg.com/product/346728/S
 
 It allows you to play Space Aces in a terminal window, or on a remote server if desired.
 
+## Features
+- Terminal based interface for maximum portability. You can even play remotely over SSH!
+- Persistent character status information. It saves every time you make a change.
+- Logging of all input and output for referencing later.
+
+## Future Plans
+- Self-updating to enable easy ways to stay up to date with the latest additions & changes.
+- Better logging formatting. I'd like to have the output log be formatted as Markdown to make it more portable.
+- More to come!
+
 ## How to Play
 ### Overview
 - Download the [latest release](https://github.com/joshschmille/sate/releases/tag/latest) for your desired OS.
@@ -12,7 +22,7 @@ It allows you to play Space Aces in a terminal window, or on a remote server if 
 
 ### OS Specific Instructions
 #### Windows
-- ***First, I highly recommend installing something like [Windows Terminal](https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701) instead of using the built-in Windows command prompt. It will work, but colors are not supported.***
+***First, I highly recommend installing something like [Windows Terminal](https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701) instead of using the built-in Windows command prompt. It will work, but colors are not supported.***
 - Download the latest release for Windows [here](https://github.com/joshschmille/sate/releases/tag/latest).
 - Extract the file wherever you choose, but make note of where you put it.
 - Within your terminal, navigate to the directory where you extracted SATE to. (Ex.: `cd C:\Users\Josh\Downloads\SATE-windows-amd64`).
