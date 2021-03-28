@@ -245,6 +245,10 @@ func cmdCharacter(a []string) {
 	switch a[0] {
 	case "name":
 		player.setAttribute("name", combineArgsToString(a[1:]))
+	case "skill":
+	    player.setAttribute("skill", combineArgsToString(a[1:]))
+	case "style":
+		player.setAttribute("style", combineArgsToString(a[1:]))
 	case "moxie":
 		player.setAttribute("moxie", combineArgsToString(a[1:]))
 	case "smarts":

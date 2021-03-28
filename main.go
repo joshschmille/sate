@@ -79,13 +79,13 @@ func main() {
 	statBlock.Title = "Stats"
 	player.load("./logs/character")
 	player.render()
-	statBlock.SetRect(termWidth-40, 0, termWidth, 9)
+	statBlock.SetRect(termWidth-40, 0, termWidth, 11)
 	statBlock.BorderStyle.Fg = primaryColor
 	statBlock.TitleStyle.Fg = secondaryColor
 
 	missionBlock.Title = "Mission"
 	missionBlock.Text = ""
-	missionBlock.SetRect(termWidth-40, 9, termWidth, 19)
+	missionBlock.SetRect(termWidth-40, 11, termWidth, 21)
 	missionBlock.BorderStyle.Fg = primaryColor
 	missionBlock.TitleStyle.Fg = secondaryColor
 
