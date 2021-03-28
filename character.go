@@ -90,3 +90,17 @@ func (c *character) setAttribute(field string, data string) {
 	//c.load("./logs/character")
 	c.render()
 }
+
+func generateSkill() string {
+	prefixes, err := readNameFile("./data/pc/skillprefix.names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+
+	skills, err := readNameFile("./data/pc/skill.names")
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+	}
+
+	return prefixes[generateNumber(0, len(prefixes)-1)] + " " + skills[generateNumber(0, len(skills)-1)]
+}

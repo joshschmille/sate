@@ -341,6 +341,8 @@ func parseArgs(s string) {
 			cmdBackstory(args)
 		case "character":
 			cmdCharacter(args)
+		case "skill":
+			cmdSkill(args)
 		case "help":
 			cmdHelp(args)
 		default:

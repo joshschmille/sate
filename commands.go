@@ -22,7 +22,7 @@ func cmdLog(a []string) {
 
 // cmdName generates and renders a random character name.
 func cmdName(a []string) {
-	names, err := readNameFile("./data/character.names")
+	names, err := readNameFile("./data/pc/character.names")
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
@@ -246,7 +246,7 @@ func cmdCharacter(a []string) {
 	case "name":
 		player.setAttribute("name", combineArgsToString(a[1:]))
 	case "skill":
-	    player.setAttribute("skill", combineArgsToString(a[1:]))
+		player.setAttribute("skill", combineArgsToString(a[1:]))
 	case "style":
 		player.setAttribute("style", combineArgsToString(a[1:]))
 	case "moxie":
@@ -264,6 +264,10 @@ func cmdCharacter(a []string) {
 	default:
 		renderOutput("Invalid subcommand: " + a[0])
 	}
+}
+
+func cmdSkill(a []string) {
+	renderOutput(generateSkill())
 }
 
 // cmdHelp renders help data to the gamelog.
