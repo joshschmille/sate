@@ -29,7 +29,7 @@ func (c *character) save() {
 
 	defer f.Close()
 
-	_, err2 := f.WriteString(c.name + "\n"+ c.skill+"\n"+c.style+"\n"+ c.moxie + "\n" + c.smarts + "\n" + c.wiggles + "\n" + c.friends + "\n" + c.pockets + "\n" + c.gumption)
+	_, err2 := f.WriteString(c.name + "\n" + c.skill + "\n" + c.style + "\n" + c.moxie + "\n" + c.smarts + "\n" + c.wiggles + "\n" + c.friends + "\n" + c.pockets + "\n" + c.gumption)
 
 	if err2 != nil {
 		log.Fatal(err2)
@@ -42,13 +42,13 @@ func (c *character) load(f string) {
 	if err != nil {
 		log.Fatalf("readLines: %s", err)
 	}
-	
+
 	if len(stats) < 9 {
-	    start := len(stats)-1
-	    
-	    for i := start;i<9;i++ {
-	        stats = append(stats, "")
-	    }
+		start := len(stats) - 1
+
+		for i := start; i < 9; i++ {
+			stats = append(stats, "")
+		}
 	}
 
 	c.name = stats[0]
@@ -71,7 +71,7 @@ func (c *character) setAttribute(field string, data string) {
 	case "skill":
 		c.skill = data
 	case "style":
-	    c.style = data
+		c.style = data
 	case "moxie":
 		c.moxie = data
 	case "smarts":
