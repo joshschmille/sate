@@ -148,8 +148,8 @@ func main() {
 			missionBlock.SetRect(payload.Width-40, 9, payload.Width, 19)
 
 			startX, startY, endX, endY := calculateMacguffinRect()
-
 			macguffinBlock.SetRect(startX, startY, endX, endY)
+
 			inputBox.SetRect(0, payload.Height-3, payload.Width, payload.Height)
 			ui.Clear()
 			ui.Render(gameLog, statBlock, missionBlock, inputBox)
