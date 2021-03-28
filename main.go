@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
@@ -12,6 +11,7 @@ import (
 
 	ui "github.com/gizak/termui/v3"
 	"github.com/gizak/termui/v3/widgets"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
 // Create the widgets for the UI layout.
@@ -34,8 +34,20 @@ func main() {
 	}
 	defer ui.Close()
 
+	// Setup lumberjack to be used with Go logger.
+	log.SetOutput(&lumberjack.Logger{
+		Filename:   "./logs/all.log",
+		MaxSize:    5, // megabytes
+		MaxBackups: 3,
+	})
+
+	// Hide everything extra when logging (timestamps, etc.)
+	log.SetFlags(0)
+
 	termWidth, termHeight = ui.TerminalDimensions()
 
+	// Setup color options. This needs to be revisited with an eye on
+	// cross-platform compatibility.
 	ui.StyleParserColorMap = map[string]ui.Color{
 		"orange":  ui.Color(202),
 		"purple":  ui.Color(99),
@@ -52,6 +64,7 @@ func main() {
 		"magenta": ui.ColorMagenta,
 	}
 
+	// Define the most used colors. Can be used later to create themes potentially.
 	primaryColor := ui.Color(32)
 	secondaryColor := ui.Color(87)
 
@@ -68,6 +81,7 @@ func main() {
 		"<C-<Backspace>>",
 	}
 
+	// Setup the game log block.
 	gameLog.Title = "Game Log"
 	gameLog.Rows = append(gameLog.Rows, "Welcome to [Space Aces](fg:purple): Terminal Edition!")
 	gameLog.Rows = append(gameLog.Rows, "")
@@ -76,34 +90,41 @@ func main() {
 	gameLog.BorderStyle.Fg = primaryColor
 	gameLog.TitleStyle.Fg = secondaryColor
 
-	statBlock.Title = "Stats"
+	// Setup the Character block.
+	statBlock.Title = "Character"
 	player.load("./logs/character")
 	player.render()
 	statBlock.SetRect(termWidth-40, 0, termWidth, 11)
 	statBlock.BorderStyle.Fg = primaryColor
 	statBlock.TitleStyle.Fg = secondaryColor
 
+	// Setup the Mission block.
 	missionBlock.Title = "Mission"
 	missionBlock.Text = ""
 	missionBlock.SetRect(termWidth-40, 11, termWidth, 21)
 	missionBlock.BorderStyle.Fg = primaryColor
 	missionBlock.TitleStyle.Fg = secondaryColor
 
+	// Setup the Macguffin block.
 	startX, startY, endX, endY := calculateMacguffinRect()
-
 	macguffinBlock.SetRect(startX, startY, endX, endY)
 
+	// Setup the Input block.
 	inputBox := widgets.NewParagraph()
 	inputBox.Text = ""
 	inputBox.SetRect(0, termHeight-3, termWidth, termHeight)
 	inputBox.BorderStyle.Fg = primaryColor
 	inputBox.TitleStyle.Fg = secondaryColor
 
+	// TODO: Possibly add a scratchpad block that can be used like a notepad.
+
+	// Render the blocks to the terminal.
 	ui.Render(gameLog, statBlock, missionBlock, inputBox)
 	if mgToggle {
 		ui.Render(macguffinBlock)
 	}
 
+	// Setup event listeners for various types of input.
 	uiEvents := ui.PollEvents()
 	for {
 		e := <-uiEvents
@@ -128,7 +149,7 @@ func main() {
 
 			startX, startY, endX, endY := calculateMacguffinRect()
 
-			macguffinBlock.SetRect(startX, startY, endX, endY) //payload.Width-40, ((payload.Width-40)/2)+1)
+			macguffinBlock.SetRect(startX, startY, endX, endY)
 			inputBox.SetRect(0, payload.Height-3, payload.Width, payload.Height)
 			ui.Clear()
 			ui.Render(gameLog, statBlock, missionBlock, inputBox)
@@ -247,31 +268,10 @@ func renderOutput(s string) {
 	gameLog.Rows = append(gameLog.Rows, "")
 	gameLog.ScrollBottom()
 
-	writeLog(s)
+	writeLogMarkdown(s)
 
 	mgToggle = false
 	ui.Render(gameLog)
-}
-
-// writeLog accepts a string of any length, and appends the string to the log file.
-func writeLog(s string) {
-	f, err := os.OpenFile("logs/all", os.O_APPEND|os.O_WRONLY, 0644)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	newLine := s
-	_, err = fmt.Fprintln(f, newLine)
-	if err != nil {
-		fmt.Println(err)
-		f.Close()
-		return
-	}
-	err = f.Close()
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
 }
 
 // parseArgs accepts a string, splits it using " " as the delimiter, and determines if it
