@@ -47,9 +47,11 @@ Please keep in mind that colors will vary from terminal to terminal. If it has a
 - Run `./SATE-linux-amd64`
 
 ### Character Modification
-The majority of the commands provided within SATE will simply use the oracles within SA to generate an outcome for you. You also have the `log` command to output any content to the log, which I use for pretty much everything. However, there is also the `character` command, which allows you to change the data within the stats block on the top-right. This command works a little differently than the others.
+The majority of the commands provided within SATE will simply use the tables & oracles within SA to generate an outcome for you. You also have the `log` command to output any content to the log, which I use for pretty much everything.
 
-To change a given field, simply supply it, and the new content using the `character` command, for example:
+There is also the `character` command, which allows you to change the data within the character block on the top-right. This command works a little differently than the others.
+
+To change a given field, specify which one you want to modify, and the new content using the `character` command, for example:
 
 - `character moxie +2` will set the `Moxie` field to `+2`.
 - `character name Willy Washington` will set the `Name` field to `Willy Washington`.
@@ -64,3 +66,4 @@ To change a given field, simply supply it, and the new content using the `charac
 
 ## A Demo GIF!
 ![SATE Demo](demo/demo.gif)
+*This demo was recorded in a Windows Terminal window, using Dracula colors, and inside WSL (Ubuntu).*
