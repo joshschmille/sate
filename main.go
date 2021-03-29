@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"time"
 
 	ui "github.com/gizak/termui/v3"
 	"github.com/gizak/termui/v3/widgets"
@@ -36,13 +37,14 @@ func main() {
 
 	// Setup lumberjack to be used with Go logger.
 	log.SetOutput(&lumberjack.Logger{
-		Filename:   "./logs/all.log",
+		Filename:   "./logs/all.md",
 		MaxSize:    5, // megabytes
 		MaxBackups: 3,
 	})
 
 	// Hide everything extra when logging (timestamps, etc.)
 	log.SetFlags(0)
+	log.Println("# Session Start - " + time.Now().Format("2006.01.02 15:04:05"))
 
 	termWidth, termHeight = ui.TerminalDimensions()
 
@@ -268,7 +270,11 @@ func renderOutput(s string) {
 	gameLog.Rows = append(gameLog.Rows, "")
 	gameLog.ScrollBottom()
 
-	writeLogMarkdown(s)
+	if strings.HasPrefix(s, "[>](fg:cyan) [log ") {
+		writeLogMarkdown("> log")
+	} else {
+		writeLogMarkdown(s)
+	}
 
 	mgToggle = false
 	ui.Render(gameLog)
