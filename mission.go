@@ -28,23 +28,23 @@ func (m *mission) generate() mission {
 func (m *mission) render(req string) {
 	switch req {
 	case "faction":
-		renderOutput("Faction: "+m.faction, "", "clear")
+		renderOutput(m.faction, "", "clear")
 	case "mission":
-		renderOutput("Mission: "+m.mission, "", "clear")
+		renderOutput(m.mission, "", "clear")
 	case "objective":
-		renderOutput("Objective: "+m.objective, "", "clear")
+		renderOutput(m.objective, "", "clear")
 	case "location":
-		renderOutput("Location: "+m.location, "", "clear")
+		renderOutput(m.location, "", "clear")
 	case "aspect":
-		renderOutput("Location Aspect: "+m.aspect, "", "clear")
+		renderOutput(m.aspect, "", "clear")
 	case "opposition":
-		renderOutput("Opposition: "+m.opposition, "", "clear")
+		renderOutput(m.opposition, "", "clear")
 	case "agenda":
-		renderOutput("Agenda: "+m.agenda, "", "clear")
+		renderOutput(m.agenda, "", "clear")
 	case "snag":
-		renderOutput("Snag: "+m.snag, "", "clear")
+		renderOutput(m.snag, "", "clear")
 	default:
-		renderOutput("[--- Mission Briefing ---](fg:green)", "", "clear")
+		renderOutput("Mission Briefing", "h1", "green")
 
 		renderOutput("Faction: "+m.faction, "", "clear")
 		renderOutput("Mission: "+m.mission, "", "clear")

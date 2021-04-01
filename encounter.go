@@ -48,7 +48,7 @@ func (e *encounter) generate() encounter {
 
 // render renders the encounter to the game log.
 func (e *encounter) render() {
-	renderOutput("[--- "+e.encounterType+" ---](fg:blue)", "", "clear")
+	renderOutput(e.encounterType, "h1", "blue")
 	renderOutput(e.output, "", "clear")
 }
 

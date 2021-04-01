@@ -87,7 +87,6 @@ func (c *character) setAttribute(field string, data string) {
 	}
 
 	c.save()
-	//c.load("./logs/character")
 	c.render()
 }
 

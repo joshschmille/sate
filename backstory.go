@@ -85,9 +85,9 @@ func howdItGo() {
 	case 2:
 		generateWoe()
 	case 3:
-		renderOutput("[Macguffin](fg:yellow) - 'macguffin' to generate.", "", "clear")
+		renderOutput("Macguffin - 'macguffin' or 'mg' to generate.", "", "yellow")
 	case 4:
-		renderOutput("[Macguffin](fg:yellow) - 'macguffin' to generate.", "", "clear")
+		renderOutput("Macguffin - 'macguffin' or 'mg' to generate.", "", "yellow")
 	case 5:
 		generateWoo()
 	case 6:
@@ -98,65 +98,62 @@ func howdItGo() {
 
 // generateWoo generates a Woo, and renders it to the game log.
 func generateWoo() {
-	prefix := "[Woo](fg:green)"
 	rnd := generateNumber(1, 6)
 	switch rnd {
 	case 1:
-		renderOutput(prefix+": Developed a Forte", "", "clear")
+		renderOutput("Woo: Developed a Forte", "", "green")
 		renderOutput(generateNpcForte(), "", "clear")
 	case 2:
-		renderOutput(prefix+": Made a Friend", "", "clear")
+		renderOutput("Woo: Made a Friend", "", "green")
 		n := npc{}
 		n.generate()
 		n.render("all")
 	case 3:
-		renderOutput(prefix+": "+generateFaction()+" owes you a favor.", "", "clear")
+		renderOutput("Woo: "+generateFaction()+" owes you a favor.", "", "green")
 	case 4:
-		renderOutput(prefix+": Acquired a Gizmo", "", "clear")
+		renderOutput("Woo: Acquired a Gizmo", "", "green")
 		g := gizmo{}
 		g.generate()
-		renderOutput("-- Gizmo --", "", "clear")
+		//renderOutput("Gizmo", "h2", "clear")
 		g.render("notitle")
 	case 5:
-		renderOutput(prefix+": Woo'd a Beasty", "", "clear")
+		renderOutput("Woo: Woo'd a Beasty", "", "green")
 		b := beasty{}
 		b.generate()
 		b.render("all")
 	case 6:
-		renderOutput(prefix+": Acquired a Mech or Ship", "", "clear")
-		renderOutput("Mech", "", "clear")
+		renderOutput("Woo: Acquired a Mech or Ship", "", "green")
+		renderOutput("Mech", "h3", "clear")
 		m := mech{}
 		m.generate()
-		m.render("all")
+		m.render("notitle")
 
-		renderOutput("Ship", "", "clear")
+		renderOutput("Ship", "h3", "clear")
 		s := ship{}
 		s.generate()
-		s.render("all")
+		s.render("notitle")
 	}
 }
 
 // generateWoo generates a Woe, and renders it to the game log.
 func generateWoe() {
-	//renderOutput("[WOE](fg:red)")
-	prefix := "[Woe](fg:red)"
 	rnd := generateNumber(1, 6)
 	switch rnd {
 	case 1:
-		renderOutput(prefix+": Developed a Flaw", "", "clear")
+		renderOutput("Woe: Developed a Flaw", "", "red")
 		renderOutput(generateNpcFlaw(), "", "clear")
 	case 2:
-		renderOutput(prefix+": Made a Frenemy", "", "clear")
+		renderOutput("Woe: Made a Frenemy", "", "red")
 		n := npc{}
 		n.generate()
 		n.render("all")
 	case 3:
-		renderOutput(prefix+": Indebted to "+generateFaction(), "", "clear")
+		renderOutput("Woe: Indebted to "+generateFaction(), "", "red")
 	case 4:
-		renderOutput(prefix+": Injured (-1 Max Gumption)", "", "clear")
+		renderOutput("Woe: Injured (-1 Max Gumption)", "", "red")
 	case 5:
-		renderOutput(prefix+": Robbed! (Lose a Woo!)", "", "clear")
+		renderOutput("Woe: Robbed! (Lose a Woo!)", "", "red")
 	case 6:
-		renderOutput(prefix+": Imprisoned for "+strconv.Itoa(generateNumber(1, 6))+" years.", "", "clear")
+		renderOutput("Woe: Imprisoned for "+strconv.Itoa(generateNumber(1, 6))+" years.", "", "red")
 	}
 }

@@ -270,8 +270,8 @@ func renderOutput(s string, format string, color string) {
 
 	switch format {
 	case "error":
-		gameLogPre = "["
-		gameLogSuf = "](fg:red)"
+		gameLogPre = "(ERROR): "
+		gameLogSuf = ""
 	case "h1":
 		gameLogPre = "--- "
 		gameLogSuf = " ---"
@@ -282,19 +282,51 @@ func renderOutput(s string, format string, color string) {
 		gameLogPre = "- "
 		gameLogSuf = " -"
 	case "input":
-		gameLogPre = "[> ](fg:cyan)["
-		gameLogSuf = "](fg:8)"
-	default:
-		gameLogPre = "-!- "
+		gameLogPre = "> "
+		gameLogSuf = ""
 	}
 
+	// Replace the colorPre & colorSuf values based on color.
 	switch color {
-	case "cyan":
+	case "orange":
 		colorPre = "["
-		colorSuf = "](fg:cyan)"
+		colorSuf = "](fg:orange)"
+	case "purple":
+		colorPre = "["
+		colorSuf = "](fg:purple)"
+	case "pink":
+		colorPre = "["
+		colorSuf = "](fg:pink)"
+	case "8":
+		colorPre = "["
+		colorSuf = "](fg:8)"
 	case "red":
 		colorPre = "["
 		colorSuf = "](fg:red)"
+	case "blue":
+		colorPre = "["
+		colorSuf = "](fg:blue)"
+	case "black":
+		colorPre = "["
+		colorSuf = "](fg:black)"
+	case "cyan":
+		colorPre = "["
+		colorSuf = "](fg:cyan)"
+	case "yellow":
+		colorPre = "["
+		colorSuf = "](fg:yellow)"
+	case "white":
+		colorPre = "["
+		colorSuf = "](fg:white)"
+	case "clear":
+		colorPre = "["
+		colorSuf = "](fg:clear)"
+	case "green":
+		colorPre = "["
+		colorSuf = "](fg:green)"
+	case "magenta":
+		colorPre = "["
+		colorSuf = "](fg:magenta)"
 	}
 
 	chunked := splitStringByMax(gameLogPre+s+gameLogSuf, termWidth-42)
@@ -324,10 +356,10 @@ func parseArgs(s string) {
 		if cmd == "log" {
 			renderOutput("Log:", "input", "clear")
 		} else {
-			renderOutput(cmd+" "+strings.Join(args, " "), "input", "clear")
+			renderOutput(cmd+" "+strings.Join(args, " "), "input", "8")
 		}
 
-		switch cmd {
+		switch strings.ToLower(cmd) {
 		case "roll":
 			cmdRoll(args)
 		case "log":
@@ -389,7 +421,7 @@ func parseArgs(s string) {
 		case "lipsum":
 			cmdLipsum(args)
 		default:
-			renderOutput("Invalid Command.", "error", "clear")
+			renderOutput("Invalid Command.", "error", "red")
 		}
 	}
 }

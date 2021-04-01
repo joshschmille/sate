@@ -57,15 +57,25 @@ func (s *ship) generate() ship {
 func (s *ship) render(req string) {
 	switch req {
 	case "name":
-		renderOutput("Name: "+s.name, "", "clear")
+		renderOutput(s.name, "", "clear")
 	case "perk":
-		renderOutput("Perk: "+s.perks[0], "", "clear")
+		renderOutput(s.perks[0], "", "clear")
 	case "quirk":
-		renderOutput("Quirk: "+s.quirks[0], "", "clear")
+		renderOutput(s.quirks[0], "", "clear")
 	case "origin":
+		renderOutput(s.origin, "", "clear")
+	case "notitle":
+		renderOutput(s.shipType, "", "clear")
+		renderOutput("Name: "+s.name, "", "clear")
+		for i := 0; i < len(s.perks); i++ {
+			renderOutput("Perk: "+s.perks[i], "", "clear")
+		}
+		for i := 0; i < len(s.quirks); i++ {
+			renderOutput("Quirk: "+s.quirks[i], "", "clear")
+		}
 		renderOutput("Origin: "+s.origin, "", "clear")
 	default:
-		renderOutput("[--- Starship ---](fg:blue)", "", "clear")
+		renderOutput("Starship", "h1", "blue")
 		renderOutput(s.shipType, "", "clear")
 		renderOutput("Name: "+s.name, "", "clear")
 		for i := 0; i < len(s.perks); i++ {

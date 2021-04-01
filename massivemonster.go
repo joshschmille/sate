@@ -29,27 +29,27 @@ func (mm *massivemonster) generate() massivemonster {
 // render renders the massive monster to the game log.
 func (mm *massivemonster) render() {
 
-	renderOutput("--- Massive Monster ---", "", "clear")
+	renderOutput("Massive Monster", "h1", "red")
 	renderOutput(mm.mmType, "", "clear")
 	renderOutput("Class: "+strconv.Itoa(mm.class), "", "clear")
 	renderOutput("Motivation: "+mm.motivation, "", "clear")
 
-	renderOutput("Abilities", "", "clear")
+	renderOutput("Abilities", "h2", "clear")
 	if len(mm.abilities) > 0 {
 		for i := 0; i < len(mm.abilities); i++ {
-			renderOutput("- "+mm.abilities[i], "", "clear")
+			renderOutput(mm.abilities[i], "listitem", "blue")
 		}
 	}
 
-	renderOutput("Natures", "", "clear")
+	renderOutput("Natures", "h2", "clear")
 	if len(mm.natures) > 0 {
 		for i := 0; i < len(mm.natures); i++ {
-			renderOutput("- "+mm.natures[i], "", "clear")
+			renderOutput(mm.natures[i], "listitem", "green")
 		}
 	}
-	renderOutput("Weak Spot: "+mm.weakSpot, "", "clear")
-	renderOutput("Incursion Zone Effect", "", "clear")
-	renderOutput("- "+mm.zEffect, "", "clear")
+	renderOutput("Weak Spot: "+mm.weakSpot, "", "yellow")
+	renderOutput("Incursion Zone Effect", "h2", "purple")
+	renderOutput(mm.zEffect, "listitem", "clear")
 
 }
 

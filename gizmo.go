@@ -65,20 +65,20 @@ func (g *gizmo) generate() gizmo {
 func (g *gizmo) render(req string) {
 	switch req {
 	case "name":
-		renderOutput("Name: "+g.name, "", "clear")
+		renderOutput(g.name, "", "clear")
 	case "effect":
-		renderOutput("Effect: "+g.effect, "", "clear")
+		renderOutput(g.effect, "", "clear")
 	case "durability":
-		renderOutput("Durability: "+g.durability, "", "clear")
+		renderOutput(g.durability, "", "clear")
 	case "notitle":
-		renderOutput("Name: "+g.name, "", "clear")
-		renderOutput("Effect: "+g.effect, "", "clear")
-		renderOutput("Durability: "+g.durability, "", "clear")
+		renderOutput("Name: "+g.name, "block", "clear")
+		renderOutput("Effect: "+g.effect, "block", "clear")
+		renderOutput("Durability: "+g.durability, "block", "clear")
 	default:
-		renderOutput("[--- Gizmo ---](fg:pink)", "", "clear")
-		renderOutput("Name: "+g.name, "", "clear")
-		renderOutput("Effect: "+g.effect, "", "clear")
-		renderOutput("Durability: "+g.durability, "", "clear")
+		renderOutput("Gizmo", "h1", "pink")
+		renderOutput("Name: "+g.name, "block", "clear")
+		renderOutput("Effect: "+g.effect, "block", "clear")
+		renderOutput("Durability: "+g.durability, "block", "clear")
 	}
 
 }

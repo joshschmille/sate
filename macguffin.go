@@ -12,13 +12,13 @@ import (
 // A macguffin contains generation for Macguffin Maker
 type macguffin struct {
 	finish string
-	imgId  int
+	imgID  int
 }
 
 // generate generates a macguffin.
 func (m *macguffin) generate() macguffin {
 	m.finish = generateMacguffinFinish()
-	m.imgId = generateMacguffinImageId()
+	m.imgID = generateMacguffinImageID()
 
 	return *m
 }
@@ -55,8 +55,8 @@ func generateMacguffinFinish() string {
 	return "Oops."
 }
 
-// generateMacguffinImageId returns a random int to choose which icon to display.
-func generateMacguffinImageId() int {
+// generateMacguffinImageID returns a random int to choose which icon to display.
+func generateMacguffinImageID() int {
 	return generateNumber(0, len(mgImages)-1)
 }
 

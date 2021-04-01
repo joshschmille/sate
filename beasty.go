@@ -28,21 +28,28 @@ func (b *beasty) render(req string) {
 	case "appearance":
 		renderOutput(b.appearance, "", "clear")
 	case "size":
-		renderOutput("Size: "+b.size, "", "clear")
+		renderOutput(b.size, "", "clear")
 	case "personality":
-		renderOutput("Personality: "+b.personality, "", "clear")
+		renderOutput(b.personality, "", "clear")
 	case "trait":
-		renderOutput("Notable Trait: "+b.trait, "", "clear")
+		renderOutput(b.trait, "", "clear")
 	case "ability":
-		renderOutput("Special Ability: "+b.ability, "", "clear")
+		renderOutput(b.ability, "", "clear")
+	case "notitle":
+		renderOutput(b.appearance, "block", "clear")
+		renderOutput("Size: "+b.size, "block", "clear")
+		renderOutput("Gumption: "+b.gumption, "block", "clear")
+		renderOutput("Personality: "+b.personality, "block", "clear")
+		renderOutput("Notable Trait: "+b.trait, "block", "clear")
+		renderOutput("Special Ability: "+b.ability, "block", "clear")
 	default:
-		renderOutput("--- Beasty ---", "", "clear")
-		renderOutput(b.appearance, "", "clear")
-		renderOutput("Size: "+b.size, "", "clear")
-		renderOutput("Gumption: "+b.gumption, "", "clear")
-		renderOutput("Personality: "+b.personality, "", "clear")
-		renderOutput("Notable Trait: "+b.trait, "", "clear")
-		renderOutput("Special Ability: "+b.ability, "", "clear")
+		renderOutput("Beasty", "h1", "magenta")
+		renderOutput(b.appearance, "block", "clear")
+		renderOutput("Size: "+b.size, "block", "clear")
+		renderOutput("Gumption: "+b.gumption, "block", "clear")
+		renderOutput("Personality: "+b.personality, "block", "clear")
+		renderOutput("Notable Trait: "+b.trait, "block", "clear")
+		renderOutput("Special Ability: "+b.ability, "block", "clear")
 	}
 }
 
@@ -92,7 +99,7 @@ func generateBeastyGumption(s string) string {
 	gumption := generateNumber(1, 6)
 	switch s {
 	case "Small":
-		gumption += 1
+		gumption++
 	case "Medium":
 		gumption += 3
 	case "Large":

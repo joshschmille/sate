@@ -26,24 +26,32 @@ func (p *planet) generate() planet {
 func (p *planet) render(req string) {
 	switch req {
 	case "type":
-		renderOutput("Planet Type: "+p.planetType, "", "clear")
+		renderOutput(p.planetType, "", "clear")
 	case "species":
-		renderOutput("Planet Species: "+p.species, "", "clear")
+		renderOutput(p.species, "", "clear")
 	case "culture":
-		renderOutput("Planet Culture: "+p.culture, "", "clear")
+		renderOutput(p.culture, "", "clear")
 	case "feature":
-		renderOutput("Planet Feature: "+p.feature, "", "clear")
+		renderOutput(p.feature, "", "clear")
 	case "aspect":
-		renderOutput("Planet Aspect: "+p.aspect, "", "clear")
+		renderOutput(p.aspect, "", "clear")
 	case "pickle":
-		renderOutput("Planet Pickle: "+p.pickle, "", "clear")
+		renderOutput(p.pickle, "", "clear")
+	case "notitle":
+		renderOutput("Planet Type: "+p.planetType, "block", "clear")
+		renderOutput("Planet Species: "+p.species, "block", "clear")
+		renderOutput("Planet Culture: "+p.culture, "block", "clear")
+		renderOutput("Planet Feature: "+p.feature, "block", "clear")
+		renderOutput("Planet Aspect: "+p.aspect, "block", "clear")
+		renderOutput("Planet Pickle: "+p.pickle, "block", "clear")
 	default:
-		renderOutput("Planet Type: "+p.planetType, "", "clear")
-		renderOutput("Planet Species: "+p.species, "", "clear")
-		renderOutput("Planet Culture: "+p.culture, "", "clear")
-		renderOutput("Planet Feature: "+p.feature, "", "clear")
-		renderOutput("Planet Aspect: "+p.aspect, "", "clear")
-		renderOutput("Planet Pickle: "+p.pickle, "", "clear")
+		renderOutput("Planet", "h1", "cyan")
+		renderOutput("Planet Type: "+p.planetType, "block", "clear")
+		renderOutput("Planet Species: "+p.species, "block", "clear")
+		renderOutput("Planet Culture: "+p.culture, "block", "clear")
+		renderOutput("Planet Feature: "+p.feature, "block", "clear")
+		renderOutput("Planet Aspect: "+p.aspect, "block", "clear")
+		renderOutput("Planet Pickle: "+p.pickle, "block", "clear")
 	}
 }
 
@@ -101,9 +109,9 @@ func generateCulture() string {
 	if rnd2 < 4 {
 		return cultures[generateNumber(0, len(cultures)-1)]
 	} else if rnd2 < 6 {
-		return cultures[generateNumber(0, len(cultures)-1)] + " [-](fg:green) " + cultures[generateNumber(0, len(cultures)-1)]
+		return cultures[generateNumber(0, len(cultures)-1)] + " <--> " + cultures[generateNumber(0, len(cultures)-1)]
 	} else {
-		return cultures[generateNumber(0, len(cultures)-1)] + " [-><-](fg:red) " + cultures[generateNumber(0, len(cultures)-1)]
+		return cultures[generateNumber(0, len(cultures)-1)] + " -><- " + cultures[generateNumber(0, len(cultures)-1)]
 	}
 }
 

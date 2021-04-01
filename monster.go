@@ -21,22 +21,23 @@ func (m *monster) generate() monster {
 func (m *monster) render(req string) {
 	switch req {
 	case "type":
-		renderOutput("Type: "+m.monsterType, "", "clear")
+		renderOutput(m.monsterType, "", "clear")
 	case "aspect":
-		renderOutput("Aspect: "+m.aspect, "", "clear")
+		renderOutput(m.aspect, "", "clear")
 	case "bearing":
-		renderOutput("Bearing: "+m.bearing, "", "clear")
+		renderOutput(m.bearing, "", "clear")
 	case "size":
-		renderOutput("Size: "+m.size, "", "clear")
+		renderOutput(m.size, "", "clear")
 	default:
-		renderOutput("--- Monster ---", "", "clear")
+		renderOutput("Monster", "h1", "orange")
 		renderOutput("Type: "+m.monsterType, "", "clear")
 		renderOutput("Aspect: "+m.aspect, "", "clear")
 		renderOutput("Bearing: "+m.bearing, "", "clear")
 		renderOutput("Size: "+m.size, "", "clear")
 		t := treasure{}
 		t.generate()
-		t.render("all")
+		renderOutput("Treasure: "+t.aspect+" "+t.feature+" "+t.form, "", "magenta")
+		//t.render("all")
 	}
 }
 

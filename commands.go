@@ -8,17 +8,24 @@ import (
 
 // cmdRoll generates and renders a D20 and D6 roll.
 func cmdRoll(a []string) {
-	// TODO: simplify, and add costs/benefits
-	output := ""
+	d20 := generateNumber(1, 20)
+	d6 := generateNumber(1, 6)
+	extra := ""
 
-	output += "D20: " + strconv.Itoa(generateNumber(1, 20)) + " D6: " + strconv.Itoa(generateNumber(1, 6))
+	if d6 < 3 {
+		extra = " [COST]"
+	} else if d6 > 4 {
+		extra = " [BENEFIT]"
+	}
+
+	output := "D20: " + strconv.Itoa(d20) + " D6: " + strconv.Itoa(d6) + extra
 
 	renderOutput(output, "", "clear")
 }
 
 // cmdLog outputs all content after the command to the game log.
 func cmdLog(a []string) {
-	renderOutput(combineArgsToString(a[0:]), "", "red")
+	renderOutput(combineArgsToString(a[0:]), "logentry", "cyan")
 }
 
 // cmdName generates and renders a random character name.
@@ -162,14 +169,14 @@ func cmdExplore(a []string) {
 	rnd := generateNumber(1, 6)
 	one, two := generateSuddenEvent()
 	if rnd < 3 {
-		renderOutput("All of a sudden...", "", "clear")
+		renderOutput("All of a sudden...", "h1", "pink")
 		renderOutput(one+" | "+two, "", "clear")
 	} else if rnd < 5 {
-		renderOutput("Feature of Interest", "", "clear")
+		renderOutput("Feature of Interest", "h1", "pink")
 		renderOutput("Feature: "+generateFeature(), "", "clear")
 		renderOutput("Aspect: "+generateFeatureAspect(), "", "clear")
 	} else {
-		renderOutput("All of a sudden...", "", "clear")
+		renderOutput("All of a sudden...", "h1", "pink")
 		renderOutput(one+" | "+two, "", "clear")
 		renderOutput("Feature of Interest", "", "clear")
 		renderOutput("Feature: "+generateFeature(), "", "clear")
@@ -263,7 +270,7 @@ func cmdCharacter(a []string) {
 	case "gumption":
 		player.setAttribute("gumption", combineArgsToString(a[1:]))
 	default:
-		renderOutput("Invalid subcommand: "+a[0], "", "clear")
+		renderOutput("Invalid subcommand: "+a[0], "error", "red")
 	}
 }
 
@@ -287,5 +294,5 @@ func cmdLipsum(a []string) {
 	lipsum := `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum in egestas urna. Nullam sollicitudin id velit ut viverra. Curabitur facilisis massa non posuere consequat. Sed et massa porta, venenatis orci eget, lacinia ante. Phasellus laoreet mi ut purus elementum, et pharetra nisi dapibus. Suspendisse nisi velit, mollis eu tristique sed, porta quis nisl. Aliquam sed mattis quam. Morbi malesuada odio ut sagittis bibendum. Sed facilisis urna justo, non dapibus lacus accumsan a. Pellentesque est arcu, scelerisque quis enim sit amet, mattis interdum tortor.
 Pellentesque elit libero, tempor sit amet fringilla non, rutrum laoreet nisi. Phasellus sed auctor lectus. Nulla facilisi. Quisque scelerisque faucibus risus, eget rhoncus mauris. Etiam in blandit dolor, nec pulvinar ex. Aenean volutpat facilisis lacus id posuere. Aenean egestas ac quam at lacinia. Duis sapien augue, faucibus sit amet venenatis at, fermentum nec odio. In maximus auctor libero, non pharetra erat rutrum eu. Fusce ornare suscipit mauris eu hendrerit.`
 
-	renderOutput(lipsum, "", "")
+	renderOutput(lipsum, "", "orange")
 }

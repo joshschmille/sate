@@ -24,6 +24,6 @@ func (h *hazard) generate() hazard {
 
 // render renders the hazard to the game log.
 func (h *hazard) render() {
-	renderOutput("--- Hazard ---", "", "clear")
-	renderOutput("Hazard: "+h.hazard, "", "clear")
+	renderOutput("Hazard", "h1", "red")
+	renderOutput(h.hazard, "", "clear")
 }

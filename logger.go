@@ -11,6 +11,27 @@ func writeLogMarkdown(input string, format string) {
 	logMarkdownPrefix := ""
 	logMarkdownSuffix := ""
 	logMarkdownEmptyLine := ""
+
+	switch format {
+	case "h1":
+		logMarkdownPrefix = "## "
+	case "h2":
+		logMarkdownPrefix = "### "
+	case "h3":
+		logMarkdownPrefix = "#### "
+	case "block":
+		logMarkdownPrefix = "> "
+		logMarkdownEmptyLine = "> "
+	case "listitem":
+		logMarkdownPrefix = "- "
+	case "input":
+		logMarkdownPrefix = "`"
+		logMarkdownSuffix = "`"
+	case "logentry":
+		logMarkdownPrefix = "`"
+		logMarkdownSuffix = "`"
+	}
+
 	stripped := stripTermFormatting(input)
 
 	log.Println(logMarkdownPrefix + stripped + logMarkdownSuffix)

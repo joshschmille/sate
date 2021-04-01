@@ -25,8 +25,10 @@ func (t *treasure) render(req string) {
 		renderOutput(t.feature, "", "clear")
 	case "form":
 		renderOutput(t.form, "", "clear")
+	case "notitle":
+		renderOutput(t.aspect+" "+t.feature+" "+t.form, "", "clear")
 	default:
-		renderOutput("--- Treasure ---", "", "clear")
+		renderOutput("Treasure", "h1", "yellow")
 		renderOutput(t.aspect+" "+t.feature+" "+t.form, "", "clear")
 	}
 }

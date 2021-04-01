@@ -60,24 +60,24 @@ func (s *sector) generate() sector {
 
 // render renders the sector object to the game log.
 func (s *sector) render(req string) {
+	renderOutput("Sector Object", "h1", "yellow")
 	if s.object == "Planet" {
-		renderOutput("--- Planet ---", "", "clear")
+		renderOutput("Planet", "h2", "clear")
 		p := planet{}
 		p.generate()
-		p.render("all")
+		p.render("notitle")
 	} else if s.object == "Twin Planets" {
-		renderOutput("--- Twin Planets ---", "", "clear")
+		renderOutput("Twin Planets", "h2", "clear")
+
+		renderOutput("Planet #1", "h3", "clear")
 		p1 := planet{}
 		p1.generate()
-		p1.render("all")
+		p1.render("notitle")
 
-		renderOutput("", "", "clear")
-		renderOutput("---", "", "clear")
-		renderOutput("", "", "clear")
-
+		renderOutput("Planet #2", "h3", "clear")
 		p2 := planet{}
 		p2.generate()
-		p2.render("all")
+		p2.render("notitle")
 	} else {
 		renderOutput(s.object, "", "clear")
 	}
