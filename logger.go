@@ -7,21 +7,14 @@ import (
 )
 
 // writeLogMarkdown accepts a string of any length, and appends the string to the log file.
-func writeLogMarkdown(input string) {
-	fullString := stripTermFormatting(input)
-	words := strings.Fields(fullString)
+func writeLogMarkdown(input string, format string) {
+	logMarkdownPrefix := ""
+	logMarkdownSuffix := ""
+	logMarkdownEmptyLine := ""
+	stripped := stripTermFormatting(input)
 
-	output := ""
-
-	switch words[0] {
-	case "---":
-		output += "## " + GetStringInBetween(fullString, "--- ", " ---")
-	case "--":
-		output += "### " + GetStringInBetween(fullString, "-- ", " --")
-	default:
-		output += fullString
-	}
-	log.Println(output)
+	log.Println(logMarkdownPrefix + stripped + logMarkdownSuffix)
+	log.Println(logMarkdownEmptyLine)
 }
 
 // stringTermFormatting returns a string after removing termui formatting.
@@ -33,12 +26,12 @@ func stripTermFormatting(s string) string {
 	// regex for '[WOO]': \[(.*?)\]
 
 	// strip the square brackets
-	test := strings.ReplaceAll(s, "[", "")
-	test = strings.ReplaceAll(test, "]", "")
+	data := strings.ReplaceAll(s, "[", "")
+	data = strings.ReplaceAll(data, "]", "")
 
 	// strip '(fg:color)'
 	var parRegex = regexp.MustCompile(`\(fg(.*?)\)`)
-	st := parRegex.ReplaceAllString(test, "")
+	st := parRegex.ReplaceAllString(data, "")
 
 	return st
 }

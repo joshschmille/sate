@@ -46,36 +46,37 @@ func (b *backstory) generate() backstory {
 
 // render renders the backstory to the game log.
 func (b *backstory) render() {
-	renderOutput("--- Backstory ---")
-	renderOutput("[Place of Origin](fg:cyan)")
+	renderOutput("Backstory", "h1", "clear")
+	renderOutput("Place of Origin", "h2", "cyan")
 	if b.origin < 4 {
 		b.origin1.render("all")
 	} else if b.origin < 6 {
-		renderOutput("Space Station: " + b.origin2)
+		renderOutput("Space Station: "+b.origin2, "", "clear")
 	} else {
 		b.origin3.render("all")
 	}
-	renderOutput("[Quirk & Demeanor](fg:cyan)")
-	renderOutput("Quirk: " + b.quirk + " | Demeanor: " + b.demeanor)
+	renderOutput("Quirk & Demeanor", "h2", "cyan")
+	renderOutput("Quirk: "+b.quirk+" | Demeanor: "+b.demeanor, "", "clear")
 
-	renderOutput("[Early Life](fg:cyan)")
-	renderOutput("- Goal: " + b.goal + " | Object: " + b.object)
-
-	howdItGo()
-
-	renderOutput("[First Steps](fg:cyan)")
-	renderOutput("You worked for " + b.faction1)
+	renderOutput("Early Life", "h2", "cyan")
+	renderOutput("Goal: "+b.goal+" | Object: "+b.object, "", "clear")
 
 	howdItGo()
 
-	renderOutput("[And Then...](fg:cyan)")
-	renderOutput("You worked for " + b.faction2)
+	renderOutput("First Steps", "h2", "cyan")
+	renderOutput("You worked for "+b.faction1, "", "clear")
+
+	howdItGo()
+
+	renderOutput("And Then...", "h2", "cyan")
+	renderOutput("You worked for "+b.faction2, "", "clear")
 
 	howdItGo()
 }
 
 // howdItGo renders the result of "How'd It Go?" to the game log.
 func howdItGo() {
+	renderOutput("How'd It Go?", "h2", "clear")
 	rnd := generateNumber(1, 6)
 	switch rnd {
 	case 1:
@@ -84,9 +85,9 @@ func howdItGo() {
 	case 2:
 		generateWoe()
 	case 3:
-		renderOutput("[Macguffin](fg:yellow) - 'macguffin' to generate.")
+		renderOutput("[Macguffin](fg:yellow) - 'macguffin' to generate.", "", "clear")
 	case 4:
-		renderOutput("[Macguffin](fg:yellow) - 'macguffin' to generate.")
+		renderOutput("[Macguffin](fg:yellow) - 'macguffin' to generate.", "", "clear")
 	case 5:
 		generateWoo()
 	case 6:
@@ -97,37 +98,38 @@ func howdItGo() {
 
 // generateWoo generates a Woo, and renders it to the game log.
 func generateWoo() {
-	renderOutput("[WOO](fg:green)")
+	prefix := "[Woo](fg:green)"
 	rnd := generateNumber(1, 6)
 	switch rnd {
 	case 1:
-		renderOutput("Developed a Forte")
-		renderOutput(generateNpcForte())
+		renderOutput(prefix+": Developed a Forte", "", "clear")
+		renderOutput(generateNpcForte(), "", "clear")
 	case 2:
-		renderOutput("Made a Friend")
+		renderOutput(prefix+": Made a Friend", "", "clear")
 		n := npc{}
 		n.generate()
 		n.render("all")
 	case 3:
-		renderOutput(generateFaction() + " owes you a favor.")
+		renderOutput(prefix+": "+generateFaction()+" owes you a favor.", "", "clear")
 	case 4:
-		renderOutput("Acquired a Gizmo")
+		renderOutput(prefix+": Acquired a Gizmo", "", "clear")
 		g := gizmo{}
 		g.generate()
-		g.render("all")
+		renderOutput("-- Gizmo --", "", "clear")
+		g.render("notitle")
 	case 5:
-		renderOutput("Woo'd a Beasty")
+		renderOutput(prefix+": Woo'd a Beasty", "", "clear")
 		b := beasty{}
 		b.generate()
 		b.render("all")
 	case 6:
-		renderOutput("Acquired a Mech or Ship")
-		renderOutput("Mech")
+		renderOutput(prefix+": Acquired a Mech or Ship", "", "clear")
+		renderOutput("Mech", "", "clear")
 		m := mech{}
 		m.generate()
 		m.render("all")
 
-		renderOutput("Ship")
+		renderOutput("Ship", "", "clear")
 		s := ship{}
 		s.generate()
 		s.render("all")
@@ -136,24 +138,25 @@ func generateWoo() {
 
 // generateWoo generates a Woe, and renders it to the game log.
 func generateWoe() {
-	renderOutput("[WOE](fg:red)")
+	//renderOutput("[WOE](fg:red)")
+	prefix := "[Woe](fg:red)"
 	rnd := generateNumber(1, 6)
 	switch rnd {
 	case 1:
-		renderOutput("Developed a Flaw")
-		renderOutput(generateNpcFlaw())
+		renderOutput(prefix+": Developed a Flaw", "", "clear")
+		renderOutput(generateNpcFlaw(), "", "clear")
 	case 2:
-		renderOutput("Made a Frenemy")
+		renderOutput(prefix+": Made a Frenemy", "", "clear")
 		n := npc{}
 		n.generate()
 		n.render("all")
 	case 3:
-		renderOutput("Indebted to " + generateFaction())
+		renderOutput(prefix+": Indebted to "+generateFaction(), "", "clear")
 	case 4:
-		renderOutput("Injured (-1 Max Gumption)")
+		renderOutput(prefix+": Injured (-1 Max Gumption)", "", "clear")
 	case 5:
-		renderOutput("Robbed! (Lose a Woo!)")
+		renderOutput(prefix+": Robbed! (Lose a Woo!)", "", "clear")
 	case 6:
-		renderOutput("Imprisoned for " + strconv.Itoa(generateNumber(1, 6)) + " years.")
+		renderOutput(prefix+": Imprisoned for "+strconv.Itoa(generateNumber(1, 6))+" years.", "", "clear")
 	}
 }

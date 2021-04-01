@@ -262,19 +262,50 @@ func combineArgsToString(s []string) string {
 // It then outputs those strings to the game log window, scrolls it to the bottom, and
 // triggers it to re-render to show the changes.
 // It also sends the content of the original string to the writeLog() func.
-func renderOutput(s string) {
-	chunked := splitStringByMax(s, termWidth-42)
+func renderOutput(s string, format string, color string) {
+	gameLogPre := ""
+	gameLogSuf := ""
+	colorPre := ""
+	colorSuf := ""
+
+	switch format {
+	case "error":
+		gameLogPre = "["
+		gameLogSuf = "](fg:red)"
+	case "h1":
+		gameLogPre = "--- "
+		gameLogSuf = " ---"
+	case "h2":
+		gameLogPre = "-- "
+		gameLogSuf = " --"
+	case "h3":
+		gameLogPre = "- "
+		gameLogSuf = " -"
+	case "input":
+		gameLogPre = "[> ](fg:cyan)["
+		gameLogSuf = "](fg:8)"
+	default:
+		gameLogPre = "-!- "
+	}
+
+	switch color {
+	case "cyan":
+		colorPre = "["
+		colorSuf = "](fg:cyan)"
+	case "red":
+		colorPre = "["
+		colorSuf = "](fg:red)"
+	}
+
+	chunked := splitStringByMax(gameLogPre+s+gameLogSuf, termWidth-42)
+
 	for i := 0; i < len(chunked); i++ {
-		gameLog.Rows = append(gameLog.Rows, chunked[i])
+		gameLog.Rows = append(gameLog.Rows, colorPre+chunked[i]+colorSuf)
 	}
 	gameLog.Rows = append(gameLog.Rows, "")
 	gameLog.ScrollBottom()
 
-	if strings.HasPrefix(s, "[>](fg:cyan) [log ") {
-		writeLogMarkdown("> log")
-	} else {
-		writeLogMarkdown(s)
-	}
+	writeLogMarkdown(s, format)
 
 	mgToggle = false
 	ui.Render(gameLog)
@@ -290,7 +321,11 @@ func parseArgs(s string) {
 
 		copy(args, all[1:])
 
-		renderOutput("[>](fg:cyan) [" + cmd + " " + strings.Join(args, " ") + "](fg:8)")
+		if cmd == "log" {
+			renderOutput("Log:", "input", "clear")
+		} else {
+			renderOutput(cmd+" "+strings.Join(args, " "), "input", "clear")
+		}
 
 		switch cmd {
 		case "roll":
@@ -351,8 +386,10 @@ func parseArgs(s string) {
 			cmdSkill(args)
 		case "help":
 			cmdHelp(args)
+		case "lipsum":
+			cmdLipsum(args)
 		default:
-			renderOutput("[Invalid Command.](fg:red)")
+			renderOutput("Invalid Command.", "error", "clear")
 		}
 	}
 }

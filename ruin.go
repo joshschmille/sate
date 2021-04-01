@@ -25,27 +25,27 @@ func (r *ruin) generate() ruin {
 func (r *ruin) render(req string) {
 	switch req {
 	case "type":
-		renderOutput("Type: " + r.ruinType)
+		renderOutput("Type: "+r.ruinType, "", "clear")
 	case "aesthetic":
-		renderOutput("Aesthetic: " + r.aesthetic)
+		renderOutput("Aesthetic: "+r.aesthetic, "", "clear")
 	case "purpose":
-		renderOutput("Purpose: " + r.purpose)
+		renderOutput("Purpose: "+r.purpose, "", "clear")
 	case "danger":
-		renderOutput("Danger Level: " + r.danger)
+		renderOutput("Danger Level: "+r.danger, "", "clear")
 	case "depth":
-		renderOutput("Depth: " + r.depth)
+		renderOutput("Depth: "+r.depth, "", "clear")
 	case "threat":
-		renderOutput("Threat: " + r.threat)
+		renderOutput("Threat: "+r.threat, "", "clear")
 	case "treasure":
 		r.treasure.render("all")
 	default:
-		renderOutput("[--- Star Ruin ---](fg:purple)")
-		renderOutput("Type: " + r.ruinType)
-		renderOutput("Aesthetic: " + r.aesthetic)
-		renderOutput("Purpose: " + r.purpose)
-		renderOutput("Danger Level: " + r.danger)
-		renderOutput("Depth: " + r.depth)
-		renderOutput("Threat: " + r.threat)
+		renderOutput("[--- Star Ruin ---](fg:purple)", "", "clear")
+		renderOutput("Type: "+r.ruinType, "", "clear")
+		renderOutput("Aesthetic: "+r.aesthetic, "", "clear")
+		renderOutput("Purpose: "+r.purpose, "", "clear")
+		renderOutput("Danger Level: "+r.danger, "", "clear")
+		renderOutput("Depth: "+r.depth, "", "clear")
+		renderOutput("Threat: "+r.threat, "", "clear")
 		r.treasure.render("all")
 	}
 }

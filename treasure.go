@@ -20,14 +20,14 @@ func (t *treasure) generate() treasure {
 func (t *treasure) render(req string) {
 	switch req {
 	case "aspect":
-		renderOutput(t.aspect)
+		renderOutput(t.aspect, "", "clear")
 	case "feature":
-		renderOutput(t.feature)
+		renderOutput(t.feature, "", "clear")
 	case "form":
-		renderOutput(t.form)
+		renderOutput(t.form, "", "clear")
 	default:
-		renderOutput("--- Treasure ---")
-		renderOutput(t.aspect + " " + t.feature + " " + t.form)
+		renderOutput("--- Treasure ---", "", "clear")
+		renderOutput(t.aspect+" "+t.feature+" "+t.form, "", "clear")
 	}
 }
 

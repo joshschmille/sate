@@ -48,8 +48,8 @@ func (e *encounter) generate() encounter {
 
 // render renders the encounter to the game log.
 func (e *encounter) render() {
-	renderOutput("[--- " + e.encounterType + " ---](fg:blue)")
-	renderOutput(e.output)
+	renderOutput("[--- "+e.encounterType+" ---](fg:blue)", "", "clear")
+	renderOutput(e.output, "", "clear")
 }
 
 // generateWeather returns a string containing a weather value.

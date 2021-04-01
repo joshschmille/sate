@@ -26,24 +26,24 @@ func (p *planet) generate() planet {
 func (p *planet) render(req string) {
 	switch req {
 	case "type":
-		renderOutput("Planet Type: " + p.planetType)
+		renderOutput("Planet Type: "+p.planetType, "", "clear")
 	case "species":
-		renderOutput("Planet Species: " + p.species)
+		renderOutput("Planet Species: "+p.species, "", "clear")
 	case "culture":
-		renderOutput("Planet Culture: " + p.culture)
+		renderOutput("Planet Culture: "+p.culture, "", "clear")
 	case "feature":
-		renderOutput("Planet Feature: " + p.feature)
+		renderOutput("Planet Feature: "+p.feature, "", "clear")
 	case "aspect":
-		renderOutput("Planet Aspect: " + p.aspect)
+		renderOutput("Planet Aspect: "+p.aspect, "", "clear")
 	case "pickle":
-		renderOutput("Planet Pickle: " + p.pickle)
+		renderOutput("Planet Pickle: "+p.pickle, "", "clear")
 	default:
-		renderOutput("Planet Type: " + p.planetType)
-		renderOutput("Planet Species: " + p.species)
-		renderOutput("Planet Culture: " + p.culture)
-		renderOutput("Planet Feature: " + p.feature)
-		renderOutput("Planet Aspect: " + p.aspect)
-		renderOutput("Planet Pickle: " + p.pickle)
+		renderOutput("Planet Type: "+p.planetType, "", "clear")
+		renderOutput("Planet Species: "+p.species, "", "clear")
+		renderOutput("Planet Culture: "+p.culture, "", "clear")
+		renderOutput("Planet Feature: "+p.feature, "", "clear")
+		renderOutput("Planet Aspect: "+p.aspect, "", "clear")
+		renderOutput("Planet Pickle: "+p.pickle, "", "clear")
 	}
 }
 

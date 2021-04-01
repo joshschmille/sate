@@ -28,32 +28,32 @@ func (m *mission) generate() mission {
 func (m *mission) render(req string) {
 	switch req {
 	case "faction":
-		renderOutput("Faction: " + m.faction)
+		renderOutput("Faction: "+m.faction, "", "clear")
 	case "mission":
-		renderOutput("Mission: " + m.mission)
+		renderOutput("Mission: "+m.mission, "", "clear")
 	case "objective":
-		renderOutput("Objective: " + m.objective)
+		renderOutput("Objective: "+m.objective, "", "clear")
 	case "location":
-		renderOutput("Location: " + m.location)
+		renderOutput("Location: "+m.location, "", "clear")
 	case "aspect":
-		renderOutput("Location Aspect: " + m.aspect)
+		renderOutput("Location Aspect: "+m.aspect, "", "clear")
 	case "opposition":
-		renderOutput("Opposition: " + m.opposition)
+		renderOutput("Opposition: "+m.opposition, "", "clear")
 	case "agenda":
-		renderOutput("Agenda: " + m.agenda)
+		renderOutput("Agenda: "+m.agenda, "", "clear")
 	case "snag":
-		renderOutput("Snag: " + m.snag)
+		renderOutput("Snag: "+m.snag, "", "clear")
 	default:
-		renderOutput("[--- Mission Briefing ---](fg:green)")
+		renderOutput("[--- Mission Briefing ---](fg:green)", "", "clear")
 
-		renderOutput("Faction: " + m.faction)
-		renderOutput("Mission: " + m.mission)
-		renderOutput("Objective: " + m.objective)
-		renderOutput("Location: " + m.location)
-		renderOutput("Location Aspect: " + m.aspect)
-		renderOutput("Opposition: " + m.opposition)
-		renderOutput("Agenda: " + m.agenda)
-		renderOutput("Snag: " + m.snag)
+		renderOutput("Faction: "+m.faction, "", "clear")
+		renderOutput("Mission: "+m.mission, "", "clear")
+		renderOutput("Objective: "+m.objective, "", "clear")
+		renderOutput("Location: "+m.location, "", "clear")
+		renderOutput("Location Aspect: "+m.aspect, "", "clear")
+		renderOutput("Opposition: "+m.opposition, "", "clear")
+		renderOutput("Agenda: "+m.agenda, "", "clear")
+		renderOutput("Snag: "+m.snag, "", "clear")
 
 		missionBlock.Text = m.faction + "\n" + m.mission + "\n" + m.objective + "\n" + m.location + "\n" + m.aspect + "\n" + m.opposition + "\n" + m.agenda + "\n" + m.snag
 		ui.Render(missionBlock)

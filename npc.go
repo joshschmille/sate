@@ -28,28 +28,28 @@ func (n *npc) render(req string) {
 
 	switch req {
 	case "quirk":
-		renderOutput("Quirk: " + n.quirk)
+		renderOutput("Quirk: "+n.quirk, "", "clear")
 	case "forte":
-		renderOutput("Forte: " + n.forte)
+		renderOutput("Forte: "+n.forte, "", "clear")
 	case "demeanor":
-		renderOutput("Demeanor: " + n.demeanor)
+		renderOutput("Demeanor: "+n.demeanor, "", "clear")
 	case "flaw":
-		renderOutput("Flaw: " + n.flaw)
+		renderOutput("Flaw: "+n.flaw, "", "clear")
 	case "goal":
-		renderOutput("Goal: " + n.goal)
+		renderOutput("Goal: "+n.goal, "", "clear")
 	case "object":
-		renderOutput("Object: " + n.object)
+		renderOutput("Object: "+n.object, "", "clear")
 	case "secret":
-		renderOutput("Secret: " + n.secret)
+		renderOutput("Secret: "+n.secret, "", "clear")
 	default:
-		renderOutput("--- NPC ---")
-		renderOutput("Quirk: " + n.quirk)
-		renderOutput("Forte: " + n.forte)
-		renderOutput("Demeanor: " + n.demeanor)
-		renderOutput("Flaw: " + n.flaw)
-		renderOutput("Goal: " + n.goal)
-		renderOutput("Object: " + n.object)
-		renderOutput("Secret: " + n.secret)
+		renderOutput("--- NPC ---", "", "clear")
+		renderOutput("Quirk: "+n.quirk, "", "clear")
+		renderOutput("Forte: "+n.forte, "", "clear")
+		renderOutput("Demeanor: "+n.demeanor, "", "clear")
+		renderOutput("Flaw: "+n.flaw, "", "clear")
+		renderOutput("Goal: "+n.goal, "", "clear")
+		renderOutput("Object: "+n.object, "", "clear")
+		renderOutput("Secret: "+n.secret, "", "clear")
 	}
 }
 

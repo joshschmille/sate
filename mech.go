@@ -22,12 +22,12 @@ func (m *mech) generate() mech {
 func (m *mech) render(req string) {
 	switch req {
 	case "weapon":
-		renderOutput("Mech Weapon: " + m.weapon)
+		renderOutput("Mech Weapon: "+m.weapon, "", "clear")
 	case "system":
-		renderOutput("Mech System: " + m.system)
+		renderOutput("Mech System: "+m.system, "", "clear")
 	default:
-		renderOutput("Mech Weapon: " + m.weapon)
-		renderOutput("Mech System: " + m.system)
+		renderOutput("Mech Weapon: "+m.weapon, "", "clear")
+		renderOutput("Mech System: "+m.system, "", "clear")
 	}
 }
 

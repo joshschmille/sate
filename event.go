@@ -26,7 +26,7 @@ func (e *event) generate(t int) event {
 
 // render renders the event to the game log.
 func (e *event) render() {
-	renderOutput(e.one + " | " + e.two)
+	renderOutput(e.one+" | "+e.two, "", "clear")
 }
 
 // generateScuffleEvent return two strings containing scuffle values.

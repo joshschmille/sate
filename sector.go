@@ -61,29 +61,29 @@ func (s *sector) generate() sector {
 // render renders the sector object to the game log.
 func (s *sector) render(req string) {
 	if s.object == "Planet" {
-		renderOutput("--- Planet ---")
+		renderOutput("--- Planet ---", "", "clear")
 		p := planet{}
 		p.generate()
 		p.render("all")
 	} else if s.object == "Twin Planets" {
-		renderOutput("--- Twin Planets ---")
+		renderOutput("--- Twin Planets ---", "", "clear")
 		p1 := planet{}
 		p1.generate()
 		p1.render("all")
 
-		renderOutput("")
-		renderOutput("---")
-		renderOutput("")
+		renderOutput("", "", "clear")
+		renderOutput("---", "", "clear")
+		renderOutput("", "", "clear")
 
 		p2 := planet{}
 		p2.generate()
 		p2.render("all")
 	} else {
-		renderOutput(s.object)
+		renderOutput(s.object, "", "clear")
 	}
 
-	renderOutput("Coordinates: " + s.coords)
-	renderOutput("Size: " + s.size)
+	renderOutput("Coordinates: "+s.coords, "", "clear")
+	renderOutput("Size: "+s.size, "", "clear")
 }
 
 // generateStrangeAnomaly returns a string containing a strange anomaly value.

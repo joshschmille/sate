@@ -26,23 +26,23 @@ func (b *beasty) generate() beasty {
 func (b *beasty) render(req string) {
 	switch req {
 	case "appearance":
-		renderOutput(b.appearance)
+		renderOutput(b.appearance, "", "clear")
 	case "size":
-		renderOutput("Size: " + b.size)
+		renderOutput("Size: "+b.size, "", "clear")
 	case "personality":
-		renderOutput("Personality: " + b.personality)
+		renderOutput("Personality: "+b.personality, "", "clear")
 	case "trait":
-		renderOutput("Notable Trait: " + b.trait)
+		renderOutput("Notable Trait: "+b.trait, "", "clear")
 	case "ability":
-		renderOutput("Special Ability: " + b.ability)
+		renderOutput("Special Ability: "+b.ability, "", "clear")
 	default:
-		renderOutput("--- Beasty ---")
-		renderOutput(b.appearance)
-		renderOutput("Size: " + b.size)
-		renderOutput("Gumption: " + b.gumption)
-		renderOutput("Personality: " + b.personality)
-		renderOutput("Notable Trait: " + b.trait)
-		renderOutput("Special Ability: " + b.ability)
+		renderOutput("--- Beasty ---", "", "clear")
+		renderOutput(b.appearance, "", "clear")
+		renderOutput("Size: "+b.size, "", "clear")
+		renderOutput("Gumption: "+b.gumption, "", "clear")
+		renderOutput("Personality: "+b.personality, "", "clear")
+		renderOutput("Notable Trait: "+b.trait, "", "clear")
+		renderOutput("Special Ability: "+b.ability, "", "clear")
 	}
 }
 
