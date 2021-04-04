@@ -147,7 +147,7 @@ func main() {
 			termHeight = payload.Height
 			gameLog.SetRect(0, 0, payload.Width-40, payload.Height-3)
 			statBlock.SetRect(payload.Width-40, 0, payload.Width, 9)
-			missionBlock.SetRect(payload.Width-40, 9, payload.Width, 19)
+			missionBlock.SetRect(payload.Width-40, 11, payload.Width, 21)
 
 			startX, startY, endX, endY := calculateMacguffinRect()
 			macguffinBlock.SetRect(startX, startY, endX, endY)
