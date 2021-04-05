@@ -17,7 +17,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-const version = "0.9.0"
+const version = "0.9.1"
 
 // Create the widgets for the UI layout.
 var gameLog = widgets.NewList()
