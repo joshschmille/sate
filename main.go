@@ -2,6 +2,8 @@ package main
 
 import (
 	"bufio"
+	"flag"
+	"fmt"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
@@ -14,6 +16,8 @@ import (
 	"github.com/gizak/termui/v3/widgets"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
+
+const version = "0.9.0"
 
 // Create the widgets for the UI layout.
 var gameLog = widgets.NewList()
@@ -30,6 +34,32 @@ var termWidth = 0
 var termHeight = 0
 
 func main() {
+	help := flag.Bool("help", false, "Show this help")
+	ver := flag.Bool("version", false, "Show your current version of SATE.")
+	update := flag.Bool("update", false, "Update SATE automatically")
+	slug := flag.String("slug", "joshschmille/sate", "Repository of this command")
+
+	flag.Usage = usage
+	flag.Parse()
+
+	if *help {
+		usage()
+		os.Exit(0)
+	}
+
+	if *ver {
+		fmt.Println(version)
+		os.Exit(0)
+	}
+
+	if *update {
+		if err := selfUpdate(*slug); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		os.Exit(0)
+	}
+
 	if err := ui.Init(); err != nil {
 		log.Fatalf("failed to initialize termui: %v", err)
 	}
