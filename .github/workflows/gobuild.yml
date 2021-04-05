@@ -23,23 +23,43 @@ jobs:
     - name: Setup zip
       run: sudo apt -y install zip unzip
 
+    - name: Create BIN dirs
+      run: |
+        mkdir bin
+        mkdir bin/linux
+        mkdir bin/windows
+        mkdir bin/darwin
+
+    - name: Copy Data & Logs
+      run: |
+        cp -R data bin/linux/
+        cp -R data bin/windows/
+        cp -R data bin/darwin/
+        cp -R logs bin/linux/
+        cp -R logs bin/windows/
+        cp -R logs bin/darwin/
+
     - name: Build Linux
       run: |
-        env GOOS=linux GOARCH=amd64 go build -o SATE-linux-amd64 -v .
+        env GOOS=linux GOARCH=amd64 go build -o bin/linux/SATE -v .
 
     - name: Build Windows
       run: |
-        env GOOS=windows GOARCH=amd64 go build -o SATE-windows-amd64.exe -v .
+        env GOOS=windows GOARCH=amd64 go build -o bin/windows/SATE.exe -v .
 
     - name: Build Darwin
       run: |
-        env GOOS=darwin GOARCH=amd64 go build -o SATE-darwin-amd64 -v .
+        env GOOS=darwin GOARCH=amd64 go build -o bin/darwin/SATE -v .
 
     - name: Archive Releases
       run: |
-        tar -czvf SATE-linux-amd64.tar.gz ./SATE-linux-amd64 ./data ./logs
-        zip -r SATE-windows-amd64.zip ./SATE-windows-amd64.exe ./data ./logs
-        zip -r SATE-darwin-amd64.zip ./SATE-darwin-amd64 ./data ./logs
+        cd bin/linux
+        tar -czvf ../../SATE_linux_amd64.tar.gz ./SATE ./data ./logs
+        cd ../windows
+        zip -r ../../SATE_windows_amd64.zip ./SATE.exe ./data ./logs
+        cd ../darwin
+        zip -r ../../SATE_darwin_amd64.zip ./SATE ./data ./logs
+        cd ../..
 
     - name: Create Release
       uses: "marvinpinto/action-automatic-releases@latest"
