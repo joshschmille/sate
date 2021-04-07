@@ -25,8 +25,12 @@ func writeLogMarkdown(input string, format string) {
 	case "listitem":
 		logMarkdownPrefix = "- "
 	case "input":
-		logMarkdownPrefix = "`"
-		logMarkdownSuffix = "`"
+		if strings.HasPrefix(input, "note ") {
+			input = ""
+		} else {
+			logMarkdownPrefix = "`"
+			logMarkdownSuffix = "`"
+		}
 	case "logentry":
 		logMarkdownPrefix = "`"
 		logMarkdownSuffix = "`"
@@ -34,8 +38,10 @@ func writeLogMarkdown(input string, format string) {
 
 	stripped := stripTermFormatting(input)
 
-	log.Println(logMarkdownPrefix + stripped + logMarkdownSuffix)
-	log.Println(logMarkdownEmptyLine)
+	if len(logMarkdownPrefix+stripped+logMarkdownSuffix) > 0 {
+		log.Println(logMarkdownPrefix + stripped + logMarkdownSuffix)
+		log.Println(logMarkdownEmptyLine)
+	}
 }
 
 // stringTermFormatting returns a string after removing termui formatting.

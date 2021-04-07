@@ -24,11 +24,14 @@ var gameLog = widgets.NewList()
 var missionBlock = widgets.NewParagraph()
 var statBlock = widgets.NewParagraph()
 var macguffinBlock = widgets.NewImage(nil)
+var scratchPad = widgets.NewParagraph()
 
 var player = character{}
 
 // Set the macguffin block to be hidden at first run.
 var mgToggle = false
+
+var inputTarget = "input"
 
 var termWidth = 0
 var termHeight = 0
@@ -149,9 +152,15 @@ func main() {
 	inputBox.TitleStyle.Fg = secondaryColor
 
 	// TODO: Possibly add a scratchpad block that can be used like a notepad.
+	//scratchPad := widgets.NewParagraph()
+	scratchPad.Title = "Notes - Inactive"
+	scratchPad.Text = ""
+	scratchPad.SetRect(termWidth-40, 21, termWidth, termHeight-3)
+	scratchPad.BorderStyle.Fg = primaryColor
+	scratchPad.TitleStyle.Fg = secondaryColor
 
 	// Render the blocks to the terminal.
-	ui.Render(gameLog, statBlock, missionBlock, inputBox)
+	ui.Render(gameLog, statBlock, missionBlock, scratchPad, inputBox)
 	if mgToggle {
 		ui.Render(macguffinBlock)
 	}
@@ -178,37 +187,63 @@ func main() {
 			gameLog.SetRect(0, 0, payload.Width-40, payload.Height-3)
 			statBlock.SetRect(payload.Width-40, 0, payload.Width, 11)
 			missionBlock.SetRect(payload.Width-40, 11, payload.Width, 21)
+			scratchPad.SetRect(payload.Width-40, 21, payload.Width, payload.Height-3)
 
 			startX, startY, endX, endY := calculateMacguffinRect()
 			macguffinBlock.SetRect(startX, startY, endX, endY)
 
 			inputBox.SetRect(0, payload.Height-3, payload.Width, payload.Height)
 			ui.Clear()
-			ui.Render(gameLog, statBlock, missionBlock, inputBox)
+			ui.Render(gameLog, statBlock, missionBlock, scratchPad, inputBox)
 			if mgToggle {
 				ui.Render(macguffinBlock)
 			}
 		case "<Enter>":
 
-			parseArgs(inputBox.Text)
+			if inputTarget == "input" {
+				parseArgs(inputBox.Text)
 
-			inputBox.Text = ""
+				inputBox.Text = ""
 
-			ui.Render(inputBox)
+				ui.Render(inputBox)
+			} else if inputTarget == "scratchpad" {
+				scratchPad.Text += "\n"
+				ui.Render(scratchPad)
+			}
 
 		case "<Space>":
-			inputBox.Text += " "
+			if inputTarget == "input" {
+				inputBox.Text += " "
+			} else if inputTarget == "scratchpad" {
+				scratchPad.Text += " "
+			}
 		case "<Backspace>":
-			length := len(inputBox.Text)
-			if length > 0 {
-				inputBox.Text = inputBox.Text[:length-1]
-				ui.Render(inputBox)
+			if inputTarget == "input" {
+				length := len(inputBox.Text)
+				if length > 0 {
+					inputBox.Text = inputBox.Text[:length-1]
+					ui.Render(inputBox)
+				}
+			} else if inputTarget == "scratchpad" {
+				length := len(scratchPad.Text)
+				if length > 0 {
+					scratchPad.Text = scratchPad.Text[:length-1]
+					ui.Render(scratchPad)
+				}
 			}
 		case "<C-<Backspace>>":
-			length := len(inputBox.Text)
-			if length > 0 {
-				inputBox.Text = inputBox.Text[:length-1]
-				ui.Render(inputBox)
+			if inputTarget == "input" {
+				length := len(inputBox.Text)
+				if length > 0 {
+					inputBox.Text = inputBox.Text[:length-1]
+					ui.Render(inputBox)
+				}
+			} else if inputTarget == "scratchpad" {
+				length := len(scratchPad.Text)
+				if length > 0 {
+					scratchPad.Text = scratchPad.Text[:length-1]
+					ui.Render(scratchPad)
+				}
 			}
 		case "<Up>":
 			gameLog.ScrollPageUp()
@@ -216,6 +251,8 @@ func main() {
 		case "<Down>":
 			gameLog.ScrollPageDown()
 			ui.Render(gameLog)
+		case "<Tab>":
+			switchInputTarget()
 		}
 
 		switch e.Type {
@@ -228,11 +265,28 @@ func main() {
 			}
 
 			if !filtered {
-				inputBox.Text += e.ID
-				ui.Render(inputBox)
+				if inputTarget == "input" {
+					inputBox.Text += e.ID
+					ui.Render(inputBox)
+				} else if inputTarget == "scratchpad" {
+					scratchPad.Text += e.ID
+					scratchPad.WrapText = true
+					ui.Render(scratchPad)
+				}
 			}
 		}
 	}
+}
+
+func switchInputTarget() {
+	if inputTarget == "input" {
+		inputTarget = "scratchpad"
+		scratchPad.Title = "Notes - Active"
+	} else {
+		inputTarget = "input"
+		scratchPad.Title = "Notes - Inactive"
+	}
+	ui.Render(scratchPad)
 }
 
 // readNameFile returns a string slice containing the lines read from the provided file path.
@@ -450,6 +504,8 @@ func parseArgs(s string) {
 			cmdHelp(args)
 		case "lipsum":
 			cmdLipsum(args)
+		case "note":
+			cmdNote(args)
 		default:
 			renderOutput("Invalid Command.", "error", "red")
 		}

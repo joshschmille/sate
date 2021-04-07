@@ -4,6 +4,8 @@ import (
 	"log"
 	"math/rand"
 	"strconv"
+
+	ui "github.com/gizak/termui/v3"
 )
 
 // cmdRoll generates and renders a D20 and D6 roll.
@@ -295,4 +297,16 @@ func cmdLipsum(a []string) {
 Pellentesque elit libero, tempor sit amet fringilla non, rutrum laoreet nisi. Phasellus sed auctor lectus. Nulla facilisi. Quisque scelerisque faucibus risus, eget rhoncus mauris. Etiam in blandit dolor, nec pulvinar ex. Aenean volutpat facilisis lacus id posuere. Aenean egestas ac quam at lacinia. Duis sapien augue, faucibus sit amet venenatis at, fermentum nec odio. In maximus auctor libero, non pharetra erat rutrum eu. Fusce ornare suscipit mauris eu hendrerit.`
 
 	renderOutput(lipsum, "", "orange")
+}
+
+func cmdNote(a []string) {
+	switch a[0] {
+	case "clear":
+		scratchPad.Text = ""
+		ui.Render(scratchPad)
+	case "save":
+		// TODO: Save to a provided file name, and clear the note block.
+	default:
+		renderOutput("Invalid subcommand: "+a[0], "error", "red")
+	}
 }
