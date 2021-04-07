@@ -6,12 +6,12 @@ It allows you to play Space Aces in a terminal window, or on a remote server if 
 ## Features
 - Terminal based interface for maximum portability. You can even play remotely over SSH!
 - Persistent character status information. It saves every time you make a change.
-- Logging of all input and output for referencing later.
+- Logging directly to a Markdown formatted file for easy use elsewhere.
+- Easy to stay up to date by running SATE with the `update` flag. ([More Info](#how-to-update))
 
 ## Future Plans
-- Self-updating to enable easy ways to stay up to date with the latest additions & changes.
-- Better logging formatting. I'd like to have the output log be formatted as Markdown to make it more portable.
-- More to come!
+- Color coded heat gauge.
+- Notes section for typing and saving short notes for later use.
 
 ## How to Play
 ### Overview
@@ -44,7 +44,7 @@ Please keep in mind that colors will vary from terminal to terminal. If it has a
 #### Linux
 - Within your terminal, download the latest release: `wget https://github.com/joshschmille/sate/releases/download/latest/SATE-linux-amd64.tar.gz`
 - Extract the file using `tar -xzvf SATE-linux-amd64.tar.gz`.
-- Run `./SATE-linux-amd64`
+- Run `./SATE`
 
 ### Character Modification
 The majority of the commands provided within SATE will simply use the tables & oracles within SA to generate an outcome for you. You also have the `log` command to output any content to the log, which I use for pretty much everything.
@@ -63,6 +63,10 @@ To change a given field, specify which one you want to modify, and the new conte
 - The `help` command will output every single top level command available.
 - The game log window can be scrolled with your `Up` and `Down` arrow keys.
 - You can toggle the `macguffin` panel's visibility with `Ctrl-x`.
+
+## How To Update
+SATE can update itself to the latest version by running it with the flag `-update`, For example: `./SATE -update`
+It will check all releases of SATE and replace itself with the latest version.
 
 ## A Demo GIF!
 ![SATE Demo](demo/demo.gif)
