@@ -6,12 +6,12 @@ It allows you to play Space Aces in a terminal window, or on a remote server if 
 ## Features
 - Terminal based interface for maximum portability. You can even play remotely over SSH!
 - Persistent character status information. It saves every time you make a change.
-- Logging of all input and output for referencing later.
+- Logging directly to a Markdown formatted file for easy use elsewhere.
+- Easy to stay up to date by running SATE with the `update` flag. ([More Info](#how-to-update))
 
 ## Future Plans
-- Self-updating to enable easy ways to stay up to date with the latest additions & changes.
-- Better logging formatting. I'd like to have the output log be formatted as Markdown to make it more portable.
-- More to come!
+- Color coded heat gauge.
+- Notes section for typing and saving short notes for later use.
 
 ## How to Play
 ### Overview
