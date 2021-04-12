@@ -271,8 +271,15 @@ func cmdCharacter(a []string) {
 		player.setAttribute("pockets", combineArgsToString(a[1:]))
 	case "gumption":
 		player.setAttribute("gumption", combineArgsToString(a[1:]))
+	case "help":
+		renderOutput("The 'character' command is used to modify the fields related to your character.", "", "")
+		renderOutput("To use it, simply choose what field you wish to change, and supply it and its new value. For example:", "", "")
+		renderOutput("> character moxie +2", "", "8")
+		renderOutput("Result:", "", "")
+		renderOutput("The Moxie field in the Character block is set to '+2'.", "", "blue")
 	default:
 		renderOutput("Invalid subcommand: "+a[0], "error", "red")
+		renderOutput("Try 'character help' for more info.", "info", "yellow")
 	}
 }
 
@@ -306,7 +313,33 @@ func cmdNote(a []string) {
 		ui.Render(scratchPad)
 	case "save":
 		// TODO: Save to a provided file name, and clear the note block.
+	case "help":
+		renderOutput("Valid Subcommands:", "", "")
+		renderOutput("clear - Clears out the note section. (No Undo)", "", "")
 	default:
 		renderOutput("Invalid subcommand: "+a[0], "error", "red")
+		renderOutput("Try 'note help' for more info.", "info", "yellow")
 	}
+}
+
+func cmdHeat(a []string) {
+	value, err := strconv.Atoi(a[0])
+	if err != nil {
+		renderOutput("Heat Value must be an integer.", "error", "red") //heatGauge.Percent = value * 5
+	} else {
+		heatGauge.Label = "Heat Level: " + a[0]
+		heatGauge.Percent = value * 5
+
+		if value < 6 {
+			heatGauge.BarColor = ui.ColorBlue
+		} else if value < 11 {
+			heatGauge.BarColor = ui.ColorYellow
+		} else if value < 16 {
+			heatGauge.BarColor = ui.Color(202)
+		} else {
+			heatGauge.BarColor = ui.ColorRed
+		}
+
+	}
+	ui.Render(heatGauge)
 }

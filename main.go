@@ -21,8 +21,9 @@ const version = "0.9.1"
 
 // Create the widgets for the UI layout.
 var gameLog = widgets.NewList()
-var missionBlock = widgets.NewParagraph()
 var statBlock = widgets.NewParagraph()
+var heatGauge = widgets.NewGauge()
+var missionBlock = widgets.NewParagraph()
 var macguffinBlock = widgets.NewImage(nil)
 var scratchPad = widgets.NewParagraph()
 
@@ -133,10 +134,19 @@ func main() {
 	statBlock.BorderStyle.Fg = primaryColor
 	statBlock.TitleStyle.Fg = secondaryColor
 
+	// Setup the Heat Gauge.
+	heatGauge.Label = "Heat Level: 0"
+	heatGauge.SetRect(termWidth-40, 11, termWidth, 14)
+	heatGauge.Percent = 0
+	heatGauge.BarColor = ui.ColorRed
+	heatGauge.BorderStyle.Fg = primaryColor
+	heatGauge.TitleStyle.Fg = secondaryColor
+	heatGauge.LabelStyle = ui.NewStyle(ui.ColorWhite)
+
 	// Setup the Mission block.
 	missionBlock.Title = "Mission"
 	missionBlock.Text = ""
-	missionBlock.SetRect(termWidth-40, 11, termWidth, 21)
+	missionBlock.SetRect(termWidth-40, 14, termWidth, 24)
 	missionBlock.BorderStyle.Fg = primaryColor
 	missionBlock.TitleStyle.Fg = secondaryColor
 
@@ -153,14 +163,14 @@ func main() {
 
 	// TODO: Possibly add a scratchpad block that can be used like a notepad.
 	//scratchPad := widgets.NewParagraph()
-	scratchPad.Title = "Notes - Inactive"
+	scratchPad.Title = "Notes [Inactive]"
 	scratchPad.Text = ""
-	scratchPad.SetRect(termWidth-40, 21, termWidth, termHeight-3)
-	scratchPad.BorderStyle.Fg = primaryColor
-	scratchPad.TitleStyle.Fg = secondaryColor
+	scratchPad.SetRect(termWidth-40, 24, termWidth, termHeight-3)
+	scratchPad.BorderStyle.Fg = ui.Color(8)
+	scratchPad.TitleStyle.Fg = ui.Color(8)
 
 	// Render the blocks to the terminal.
-	ui.Render(gameLog, statBlock, missionBlock, scratchPad, inputBox)
+	ui.Render(gameLog, statBlock, heatGauge, missionBlock, scratchPad, inputBox)
 	if mgToggle {
 		ui.Render(macguffinBlock)
 	}
@@ -175,7 +185,7 @@ func main() {
 		case "<C-x>":
 			if mgToggle {
 				mgToggle = false
-				ui.Render(gameLog, statBlock, missionBlock, inputBox)
+				ui.Render(gameLog, statBlock, heatGauge, missionBlock, inputBox)
 			} else {
 				mgToggle = true
 				ui.Render(macguffinBlock)
@@ -186,15 +196,16 @@ func main() {
 			termHeight = payload.Height
 			gameLog.SetRect(0, 0, payload.Width-40, payload.Height-3)
 			statBlock.SetRect(payload.Width-40, 0, payload.Width, 11)
-			missionBlock.SetRect(payload.Width-40, 11, payload.Width, 21)
-			scratchPad.SetRect(payload.Width-40, 21, payload.Width, payload.Height-3)
+			heatGauge.SetRect(payload.Width-40, 11, payload.Width, 14)
+			missionBlock.SetRect(payload.Width-40, 14, payload.Width, 24)
+			scratchPad.SetRect(payload.Width-40, 24, payload.Width, payload.Height-3)
 
 			startX, startY, endX, endY := calculateMacguffinRect()
 			macguffinBlock.SetRect(startX, startY, endX, endY)
 
 			inputBox.SetRect(0, payload.Height-3, payload.Width, payload.Height)
 			ui.Clear()
-			ui.Render(gameLog, statBlock, missionBlock, scratchPad, inputBox)
+			ui.Render(gameLog, statBlock, heatGauge, missionBlock, scratchPad, inputBox)
 			if mgToggle {
 				ui.Render(macguffinBlock)
 			}
@@ -281,10 +292,17 @@ func main() {
 func switchInputTarget() {
 	if inputTarget == "input" {
 		inputTarget = "scratchpad"
-		scratchPad.Title = "Notes - Active"
+		scratchPad.Title = "Notes"
+		scratchPad.BorderStyle.Fg = ui.ColorBlue
+		scratchPad.BorderStyle.Fg = ui.Color(32)
+		scratchPad.TitleStyle.Fg = ui.Color(87)
+		scratchPad.TextStyle = ui.NewStyle(ui.ColorClear)
 	} else {
 		inputTarget = "input"
-		scratchPad.Title = "Notes - Inactive"
+		scratchPad.Title = "Notes [Inactive]"
+		scratchPad.BorderStyle.Fg = ui.Color(8)
+		scratchPad.TitleStyle.Fg = ui.Color(8)
+		scratchPad.TextStyle = ui.NewStyle(ui.Color(8))
 	}
 	ui.Render(scratchPad)
 }
@@ -355,7 +373,8 @@ func renderOutput(s string, format string, color string) {
 	switch format {
 	case "error":
 		gameLogPre = "(ERROR): "
-		gameLogSuf = ""
+	case "info":
+		gameLogPre = "(INFO): "
 	case "h1":
 		gameLogPre = "--- "
 		gameLogSuf = " ---"
@@ -367,7 +386,6 @@ func renderOutput(s string, format string, color string) {
 		gameLogSuf = " -"
 	case "input":
 		gameLogPre = "> "
-		gameLogSuf = ""
 	}
 
 	// Replace the colorPre & colorSuf values based on color.
@@ -506,6 +524,8 @@ func parseArgs(s string) {
 			cmdLipsum(args)
 		case "note":
 			cmdNote(args)
+		case "heat":
+			cmdHeat(args)
 		default:
 			renderOutput("Invalid Command.", "error", "red")
 		}

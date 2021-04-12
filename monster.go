@@ -34,10 +34,11 @@ func (m *monster) render(req string) {
 		renderOutput("Aspect: "+m.aspect, "", "clear")
 		renderOutput("Bearing: "+m.bearing, "", "clear")
 		renderOutput("Size: "+m.size, "", "clear")
+
+		renderOutput("Treasure", "h2", "")
 		t := treasure{}
 		t.generate()
-		renderOutput("Treasure: "+t.aspect+" "+t.feature+" "+t.form, "", "magenta")
-		//t.render("all")
+		t.render("notitle")
 	}
 }
 

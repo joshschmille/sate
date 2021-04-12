@@ -49,11 +49,11 @@ func (b *backstory) render() {
 	renderOutput("Backstory", "h1", "clear")
 	renderOutput("Place of Origin", "h2", "cyan")
 	if b.origin < 4 {
-		b.origin1.render("all")
+		b.origin1.render("notitle")
 	} else if b.origin < 6 {
 		renderOutput("Space Station: "+b.origin2, "", "clear")
 	} else {
-		b.origin3.render("all")
+		b.origin3.render("notitle")
 	}
 	renderOutput("Quirk & Demeanor", "h2", "cyan")
 	renderOutput("Quirk: "+b.quirk+" | Demeanor: "+b.demeanor, "", "clear")
@@ -107,7 +107,7 @@ func generateWoo() {
 		renderOutput("Woo: Made a Friend", "", "green")
 		n := npc{}
 		n.generate()
-		n.render("all")
+		n.render("notitle")
 	case 3:
 		renderOutput("Woo: "+generateFaction()+" owes you a favor.", "", "green")
 	case 4:
@@ -120,7 +120,7 @@ func generateWoo() {
 		renderOutput("Woo: Woo'd a Beasty", "", "green")
 		b := beasty{}
 		b.generate()
-		b.render("all")
+		b.render("notitle")
 	case 6:
 		renderOutput("Woo: Acquired a Mech or Ship", "", "green")
 		renderOutput("Mech", "h3", "clear")
@@ -146,7 +146,7 @@ func generateWoe() {
 		renderOutput("Woe: Made a Frenemy", "", "red")
 		n := npc{}
 		n.generate()
-		n.render("all")
+		n.render("notitle")
 	case 3:
 		renderOutput("Woe: Indebted to "+generateFaction(), "", "red")
 	case 4:
