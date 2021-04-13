@@ -29,6 +29,9 @@ var scratchPad = widgets.NewParagraph()
 
 var player = character{}
 
+var primaryColor ui.Color //:= ui.Color(32)
+var secondaryColor ui.Color
+
 // Set the macguffin block to be hidden at first run.
 var mgToggle = false
 
@@ -101,8 +104,8 @@ func main() {
 	}
 
 	// Define the most used colors. Can be used later to create themes potentially.
-	primaryColor := ui.Color(32)
-	secondaryColor := ui.Color(87)
+	primaryColor = ui.Color(32)
+	secondaryColor = ui.Color(87)
 
 	filteredWords := []string{
 		"<Space>",

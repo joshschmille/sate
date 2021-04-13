@@ -39,7 +39,6 @@ func migrate(previous string) {
 	case "0.9.1":
 		fallthrough
 	case "0.9.2":
-		// Fix help.names data
 	}
 	fmt.Println("Data Migration Complete.")
 }

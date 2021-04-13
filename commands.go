@@ -325,21 +325,34 @@ func cmdNote(a []string) {
 func cmdHeat(a []string) {
 	value, err := strconv.Atoi(a[0])
 	if err != nil {
-		renderOutput("Heat Value must be an integer.", "error", "red") //heatGauge.Percent = value * 5
+		renderOutput("Heat Value must be an integer.", "error", "red")
 	} else {
+		gameLog.BorderStyle.Fg = primaryColor
+		statBlock.BorderStyle.Fg = primaryColor
+		heatGauge.BorderStyle.Fg = primaryColor
+		missionBlock.BorderStyle.Fg = primaryColor
+		scratchPad.BorderStyle.Fg = primaryColor
 		heatGauge.Label = "Heat Level: " + a[0]
 		heatGauge.Percent = value * 5
 
 		if value < 6 {
 			heatGauge.BarColor = ui.ColorBlue
 		} else if value < 11 {
-			heatGauge.BarColor = ui.ColorYellow
+			heatGauge.BarColor = ui.ColorGreen
 		} else if value < 16 {
-			heatGauge.BarColor = ui.Color(202)
+			heatGauge.BarColor = ui.ColorYellow
+		} else if value < 21 {
+			heatGauge.BarColor = ui.ColorRed
 		} else {
 			heatGauge.BarColor = ui.ColorRed
+			gameLog.BorderStyle.Fg = ui.ColorRed
+			statBlock.BorderStyle.Fg = ui.ColorRed
+			heatGauge.BorderStyle.Fg = ui.ColorRed
+			missionBlock.BorderStyle.Fg = ui.ColorRed
+			scratchPad.BorderStyle.Fg = ui.ColorRed
+			ui.Render(gameLog, statBlock, heatGauge, missionBlock, scratchPad)
 		}
 
 	}
-	ui.Render(heatGauge)
+	ui.Render(gameLog, statBlock, heatGauge, missionBlock, scratchPad)
 }
