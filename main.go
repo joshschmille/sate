@@ -436,6 +436,7 @@ func renderOutput(s string, format string, color string) {
 	for i := 0; i < len(chunked); i++ {
 		gameLog.Rows = append(gameLog.Rows, colorPre+chunked[i]+colorSuf)
 	}
+	//gameLog.Rows = append(gameLog.Rows, "")
 	gameLog.ScrollBottom()
 
 	writeLogMarkdown(s, format)
@@ -459,6 +460,8 @@ func parseArgs(s string) {
 		} else {
 			renderOutput(cmd+" "+strings.Join(args, " "), "input", "8")
 		}
+
+		var isMG bool = false
 
 		switch strings.ToLower(cmd) {
 		case "roll":
@@ -511,6 +514,7 @@ func parseArgs(s string) {
 			cmdMacguffin(args)
 		case "mg":
 			cmdMacguffin(args)
+			isMG = true
 		case "backstory":
 			cmdBackstory(args)
 		case "character":
@@ -528,6 +532,9 @@ func parseArgs(s string) {
 		default:
 			renderOutput("Invalid Command.", "error", "red")
 		}
-		renderOutput("", "", "")
+		if !isMG {
+			renderOutput("", "", "")
+		}
+		//
 	}
 }
