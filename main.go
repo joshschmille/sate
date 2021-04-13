@@ -436,7 +436,6 @@ func renderOutput(s string, format string, color string) {
 	for i := 0; i < len(chunked); i++ {
 		gameLog.Rows = append(gameLog.Rows, colorPre+chunked[i]+colorSuf)
 	}
-	gameLog.Rows = append(gameLog.Rows, "")
 	gameLog.ScrollBottom()
 
 	writeLogMarkdown(s, format)
@@ -529,5 +528,6 @@ func parseArgs(s string) {
 		default:
 			renderOutput("Invalid Command.", "error", "red")
 		}
+		renderOutput("", "", "")
 	}
 }
